@@ -41,7 +41,7 @@ function App() {
   const [worker, setWorker] = useState(
     new Worker("./worker", { name: "runBigTask", type: "module" })
   );
-  const { bigTask } = wrap<import("./worker").BigTaskWorker>(worker);
+  const { AbletonProjectAnalyzer } = wrap<import("./workerFiles/worker").AbletonProjectAnalyzerType>(worker);
 
   const {
     acceptedFiles,
@@ -56,7 +56,7 @@ function App() {
 
   useEffect(() => {
     async function big(file: any) {
-      await bigTask(file);
+      await AbletonProjectAnalyzer(file);
     }
     if (acceptedFiles.length > 0) {
       acceptedFiles.map(file => big(file))
