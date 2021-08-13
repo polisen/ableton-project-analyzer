@@ -1,10 +1,11 @@
-import React, {useMemo} from "react";
+import React, { useState, useEffect, useMemo } from 'react'
 import logo from "./logo.svg";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import styled from "styled-components";
 import { useLottie, useLottieInteractivity } from "lottie-react";
 import { useDropzone } from "react-dropzone";
+import { wrap } from "comlink";
 
 const Background = styled.div`
   width: 100vw;
@@ -39,6 +40,11 @@ const Dropzone: any = styled.div`
 
 function App() {
 
+  const [worker, setWorker] = useState(
+    new Worker("./worker", { name: "runBigTask", type: "module" })
+  );
+  const { bigTask } = wrap<import("./worker").BigTaskWorker>(worker);
+
   const {
     acceptedFiles,
     fileRejections,
@@ -49,11 +55,21 @@ function App() {
     isDragReject
   } = useDropzone({});
 
+
+  useEffect(() => {
+    async function big() {
+      await bigTask(10);
+    }
+    big();
+  }, [worker]);
+
+
   const acceptedFileItems = acceptedFiles.map((file: any) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
   ));
+
 
   return (
     <Background>

@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "lib": [
+      "WebWorker",
       "dom",
       "dom.iterable",
       "esnext"
@@ -21,6 +22,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "App.tsx",
+    "config-overrides.js"
   ]
 }
