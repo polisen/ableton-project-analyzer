@@ -26,11 +26,95 @@ export const bigTask = async (file: any) => {
   }
 };
 
-const featureExtractor = (projectObj: any) => {
+interface AbletonProject {
+  Ableton: {
+    LiveSet: {
+      Tracks: (AudioTrack | MidiTrack | ReturnTrack)
+    }
+  }
+}
+
+interface AudioTrack {
+  [key: string]: {
+    DeviceChain: {
+      MainSequencer: {
+        Sample: {
+          ArrangerAutomation: {
+            Events: AudioClip
+          }
+        }
+      }
+    }
+  }
+}
+
+interface MidiTrack {
+  [key: string]: {
+    Name: {
+      EffectiveName: string;
+    }
+    DeviceChain: {
+      DeviceChain: {
+        Devices: (AbletonPlugin | Plugin)
+      }
+    }
+  }
+}
+
+interface ReturnTrack {
+
+}
+
+interface AbletonPlugin {
+  [key: string]: (DrumGroup)
+}
+
+
+interface DrumGroup {
+  Branches: {
+    [key: string]: {
+    }
+  }
+}
+interface Plugin {
+  [key: string]: {
+    PluginDesc: any
+  }
+}
+
+interface VST3PluginInfo {
+  DeviceType: 2;
+  Name: string;
+  Preset: {
+
+  }
+}
+
+export interface AudioClip {
+  [key: string]: {
+    Name: string;
+    SampleRef: {
+      // Duration in minutes base10 = DefaultDuration / DefaultSampleRate / 60
+      DefaultDuration: string;
+      DefaultSampleRate: string;
+      FileRef: {
+        OriginalFileSize: string;
+        Path: string;
+        RelativePath: string;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+const featureExtractor = (projectObj: AbletonProject) => {
   console.log(projectObj);
   console.log(
-    projectObj.Ableton.LiveSet.Tracks.AudioTrack_15.DeviceChain.MainSequencer
-      .Sample.ArrangerAutomation.Events
+    projectObj.Ableton.LiveSet.Tracks
   );
 };
 
