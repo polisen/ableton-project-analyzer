@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import logo from "./logo.svg";
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import styled from "styled-components";
-import { useLottie, useLottieInteractivity } from "lottie-react";
 import { useDropzone } from "react-dropzone";
 import { wrap } from "comlink";
+// import { greet } from './greeting.worker';
+
 
 const Background = styled.div`
   width: 100vw;
@@ -39,7 +38,6 @@ const Dropzone: any = styled.div`
 `;
 
 function App() {
-
   const [worker, setWorker] = useState(
     new Worker("./worker", { name: "runBigTask", type: "module" })
   );
@@ -57,11 +55,14 @@ function App() {
 
 
   useEffect(() => {
-    async function big() {
-      await bigTask(10);
+    async function big(file: any) {
+      await bigTask(file);
     }
-    big();
-  }, [worker]);
+    if (acceptedFiles.length > 0) {
+      acceptedFiles.map(file => big(file))
+    }
+
+  }, [acceptedFiles]);
 
 
   const acceptedFileItems = acceptedFiles.map((file: any) => (
