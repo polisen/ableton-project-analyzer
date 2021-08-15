@@ -1,5 +1,12 @@
 const pako = require("pako");
 const txml = require("txml");
+import {
+  AbletonProject,
+  AbletonTrack,
+  TrackName,
+  DeviceChain
+} from "./abletonProject.types";
+
 export const bigTask = async (file: any) => {
   if (file) {
     let r = new FileReader();
@@ -12,8 +19,10 @@ export const bigTask = async (file: any) => {
           });
           const parsedXML = txml.parse(XMLstring);
           console.log(parsedXML);
-          let projectObj = recursiveFormatter("root", parsedXML);
-          featureExtractor(projectObj);
+          let projectObj = recursiveFormat("root", parsedXML);
+          console.log(projectObj)
+          findData(projectObj);
+          // featureExtractor(projectObj);
         } else {
           // ...
         }
@@ -26,105 +35,13 @@ export const bigTask = async (file: any) => {
   }
 };
 
-interface AbletonProject {
-  Ableton: {
-    LiveSet: {
-      Tracks: (AudioTrack | MidiTrack | ReturnTrack)
-    }
-  }
-}
-
-interface AudioTrack {
-  [key: string]: {
-    DeviceChain: {
-      MainSequencer: {
-        Sample: {
-          ArrangerAutomation: {
-            Events: AudioClip
-          }
-        }
-      }
-    }
-  }
-}
-
-interface MidiTrack {
-  [key: string]: {
-    Name: {
-      EffectiveName: string;
-    }
-    DeviceChain: {
-      DeviceChain: {
-        Devices: (AbletonPlugin | Plugin)
-      }
-    }
-  }
-}
-
-interface ReturnTrack {
-
-}
-
-interface AbletonPlugin {
-  [key: string]: (DrumGroup)
-}
-
-
-interface DrumGroup {
-  Branches: {
-    [key: string]: {
-    }
-  }
-}
-interface Plugin {
-  [key: string]: {
-    PluginDesc: any
-  }
-}
-
-interface VST3PluginInfo {
-  DeviceType: 2;
-  Name: string;
-  Preset: {
-
-  }
-}
-
-export interface AudioClip {
-  [key: string]: {
-    Name: string;
-    SampleRef: {
-      // Duration in minutes base10 = DefaultDuration / DefaultSampleRate / 60
-      DefaultDuration: string;
-      DefaultSampleRate: string;
-      FileRef: {
-        OriginalFileSize: string;
-        Path: string;
-        RelativePath: string;
-      }
-    }
-  }
-}
-
-
-
-
-
-
-const featureExtractor = (projectObj: AbletonProject) => {
-  console.log(projectObj);
-  console.log(
-    projectObj.Ableton.LiveSet.Tracks
-  );
-};
-
 /**
  * Recursively traverses object structure, recursing for each layer, returning a simplified version of the layer.
  * The recursive case is if there are no more children;
  * @param obj - the processed output of txml.parse()
  */
 
-const recursiveFormatter = function recursiveProjectInfoFormatter(
+const recursiveFormat = function recursiveProjectInfoFormatter(
   tagName: string,
   arr: any
 ) {
@@ -145,7 +62,7 @@ const recursiveFormatter = function recursiveProjectInfoFormatter(
       obj = {
         ...obj,
         [attributes.Id ? `${tagName}_${attributes.Id}` : tagName]: {
-          ...recursiveFormatter(tagName, children),
+          ...recursiveFormat(tagName, children),
         },
       };
     } else if (attributes.Value) {
@@ -153,6 +70,52 @@ const recursiveFormatter = function recursiveProjectInfoFormatter(
     }
   }
   return obj;
+};
+
+/**
+ * Extracts the data I have decided is relevant.
+ * @param {AbletonProject} object - project to analyse
+ * @param Patterns - shapes of data to find.
+ */
+
+
+const nameExtractor = (Name: TrackName) => {
+  return Name.MemorizedFirstClipName ?? Name.EffectiveName;
+}
+
+const pluginExtractor = (DeviceChain: DeviceChain) => {
+
+}
+
+const mainExtractor = (DeviceChain: DeviceChain) => {
+  
+  
+  return {}
+}
+
+const trackExtractor = ({Name, DeviceChain}: AbletonTrack) => {
+  return {
+    Name: nameExtractor(Name),
+    ...mainExtractor(DeviceChain)
+  }
+}
+
+const findData = function findInformationInProject(
+  object: AbletonProject
+) {
+  console.log(object)
+  let results = {};
+  let tracks = {
+    ...object.Ableton.LiveSet.Tracks,
+    MasterTrack: object.Ableton.LiveSet.MasterTrack
+  }
+  for(let [key,value] of Object.entries(tracks)) {
+    console.log(trackExtractor(value))
+  }
+  
+  
+
+
 };
 
 /**
