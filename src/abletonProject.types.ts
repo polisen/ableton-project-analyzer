@@ -37,7 +37,7 @@ export interface DeviceChain {
   };
 }
 
-interface AudioMainSequencer {
+export interface AudioMainSequencer {
   //clip view samples
   ClipSlotList: {
     ClipSlot: {
@@ -52,7 +52,7 @@ interface AudioMainSequencer {
   };
 }
 
-interface MidiMainSequencer {
+export interface MidiMainSequencer {
   ClipTimeable: {
     ArrangerAutomation: {
       Events: {
@@ -61,6 +61,7 @@ interface MidiMainSequencer {
     };
   };
 }
+
 
 interface AudioEffectGroupDevice {
   Name: string;
@@ -100,7 +101,7 @@ interface Player {
 }
 
 interface PluginDevice {
-  PluginDesc: PluginInfo;
+  PluginDesc: PluginDesc;
 }
 
 interface DrumGroup {
@@ -114,7 +115,7 @@ interface DrumBranch {
   Name: TrackName;
 }
 
-interface PluginInfo {
+interface PluginDesc {
   Manufacturer?: string;
   Name?: string;
   PlugName?: string;

@@ -4,6 +4,8 @@ import {
   AbletonProject,
   AbletonTrack,
   TrackName,
+  AudioMainSequencer,
+  MidiMainSequencer,
   DeviceChain
 } from "./abletonProject.types";
 
@@ -83,39 +85,78 @@ const nameExtractor = (Name: TrackName) => {
   return Name.MemorizedFirstClipName ?? Name.EffectiveName;
 }
 
-const pluginExtractor = (DeviceChain: DeviceChain) => {
-
+const samplerExtractor = ({Player: {MultiSampleMap: {SampleParts}}}: any) => {
+  console.log(SampleParts)
+  let results = {}
+  for(let [key, value] of Object.entries(SampleParts)) {
+    let {SampleRef: {DefaultDuration, DefaultSampleRate, FileRef}}: any = value;
+    results = {...results, [key]: {DefaultDuration, DefaultSampleRate, FileRef}}
+  }
+  console.log(`results`, results)
 }
 
-const mainExtractor = (DeviceChain: DeviceChain) => {
-  
+const deviceExtractor = ({Devices}: any): object => {
+  if (!Devices) return {}
+  const pluginList = {};
+  console.log(Devices)
+  for(let [key, value] of Object.entries(Devices)) {
+    if (key.includes('Au')) {
+      console.log('Au')
+    }
+    if (key.includes('PluginDevice')) {
+      console.log('PluginDevice')
+    }
+    if (key.includes('AudioEffectGroup')) {
+      console.log('EffectGroup')
+    }
+    if (key.includes('InstrumentGroup')) {
+      console.log('InstrumentGroup')
+    }
+    if (key.includes('DrumGroup')) {
+      console.log('DrumGroup')
+    }
+    if (key.includes('MultiSampler') || key.includes('Simpler')) {
+      samplerExtractor(value)
+    }
+  }
   
   return {}
+}
+
+const audioExtractor = (MainSequencer: (AudioMainSequencer | MidiMainSequencer)): object => {
+  return {}
+}
+
+const deviceChainExtractor = ({DeviceChain, MainSequencer}: DeviceChain) => {
+  return {
+    ...(MainSequencer ? audioExtractor(MainSequencer) : {}),
+    ...deviceExtractor(DeviceChain)
+  }
 }
 
 const trackExtractor = ({Name, DeviceChain}: AbletonTrack) => {
   return {
     Name: nameExtractor(Name),
-    ...mainExtractor(DeviceChain)
+    ...deviceChainExtractor(DeviceChain)
   }
 }
 
 const findData = function findInformationInProject(
   object: AbletonProject
 ) {
-  console.log(object)
+
   let results = {};
   let tracks = {
     ...object.Ableton.LiveSet.Tracks,
     MasterTrack: object.Ableton.LiveSet.MasterTrack
   }
   for(let [key,value] of Object.entries(tracks)) {
-    console.log(trackExtractor(value))
+    results = {...results, ...trackExtractor(value)}
   }
   
   
-
-
+  console.log(results)
+  return results
 };
 
 /**
