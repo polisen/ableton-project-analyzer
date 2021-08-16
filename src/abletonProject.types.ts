@@ -31,11 +31,12 @@ export interface TrackName {
 export interface DeviceChain {
   MainSequencer?: AudioMainSequencer | MidiMainSequencer;
   DeviceChain: {
-    Devices: {
-      [key: string]: AbletonPlugin | PluginDevice | AudioEffectGroupDevice;
-    };
+      Devices: Devices;
   };
 }
+
+export type Devices = AbletonPlugin | AudioEffectGroup |  InstrumentGroup | PluginDevice;
+
 
 export interface AudioMainSequencer {
   //clip view samples
@@ -63,22 +64,49 @@ export interface MidiMainSequencer {
 }
 
 
-interface AudioEffectGroupDevice {
-  Name: string;
+export interface AudioEffectGroup {
   Branches: {
     [key: string]: AudioEffectBranch;
   };
 }
 
-interface AudioEffectBranch {
+
+export interface AudioEffectBranch {
+  Name: TrackName;
   DeviceChain: {
     AudioToAudioDeviceChain: DeviceChain;
   };
 }
 
-interface AbletonPlugin {
-  [key: string]: DrumGroup | MultiSampler | OriginalSimpler;
+
+export interface InstrumentGroup {
+  Branches: {
+    [key: string]: InstrumentDeviceBranch;
+  };
 }
+
+export interface InstrumentDeviceBranch {
+  DeviceChain: DeviceChain;
+  Name: TrackName;
+}
+
+
+export interface DrumGroup {
+  Branches: {
+    [key: string]: DrumBranch;
+  };
+}
+
+export interface DrumBranch {
+  DeviceChain: DeviceChain;
+  Name: TrackName;
+}
+
+
+
+
+type AbletonPlugin = DrumGroup | MultiSampler | OriginalSimpler
+
 
 interface MultiSampler {
   Player: Player;
@@ -101,21 +129,12 @@ interface Player {
 }
 
 interface PluginDevice {
-  PluginDesc: PluginDesc;
+  [key: string]: {
+    PluginDesc: PluginDesc;
+  }
 }
 
-interface DrumGroup {
-  Branches: {
-    [key: string]: DrumBranch;
-  };
-}
-
-interface DrumBranch {
-  Devicechain: DeviceChain;
-  Name: TrackName;
-}
-
-interface PluginDesc {
+export interface PluginDesc {
   Manufacturer?: string;
   Name?: string;
   PlugName?: string;
