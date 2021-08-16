@@ -1,5 +1,5 @@
 import {expose} from 'comlink';
-import {bigTask} from './utils';
+import {bigTask} from './AbletonExtraction';
 
 
 const worker = {
