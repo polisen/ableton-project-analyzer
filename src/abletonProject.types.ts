@@ -35,7 +35,7 @@ export interface DeviceChain {
   };
 }
 
-export type Devices = AbletonPlugin | AudioEffectGroup |  InstrumentGroup | PluginDevice;
+export type Devices = AbletonPlugin | DeviceGroup | PluginDevice;
 
 
 export interface AudioMainSequencer {
@@ -63,49 +63,20 @@ export interface MidiMainSequencer {
   };
 }
 
-
-export interface AudioEffectGroup {
+export interface DeviceGroup {
   Branches: {
-    [key: string]: AudioEffectBranch;
+    [key: string]: Branch;
   };
 }
 
 
-export interface AudioEffectBranch {
+export interface Branch {
   Name: TrackName;
-  DeviceChain: {
-    AudioToAudioDeviceChain: DeviceChain;
-  };
-}
-
-
-export interface InstrumentGroup {
-  Branches: {
-    [key: string]: InstrumentDeviceBranch;
-  };
-}
-
-export interface InstrumentDeviceBranch {
   DeviceChain: DeviceChain;
-  Name: TrackName;
 }
 
 
-export interface DrumGroup {
-  Branches: {
-    [key: string]: DrumBranch;
-  };
-}
-
-export interface DrumBranch {
-  DeviceChain: DeviceChain;
-  Name: TrackName;
-}
-
-
-
-
-type AbletonPlugin = DrumGroup | MultiSampler | OriginalSimpler
+type AbletonPlugin = DeviceGroup | MultiSampler | OriginalSimpler
 
 
 interface MultiSampler {

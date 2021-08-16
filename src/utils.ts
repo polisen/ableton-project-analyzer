@@ -7,10 +7,8 @@ import {
   TrackName,
   AudioMainSequencer,
   MidiMainSequencer,
-  InstrumentDeviceBranch,
-  DrumGroup,
-  InstrumentGroup,
-  AudioEffectGroup,
+  Branch,
+  DeviceGroup,
   PluginDesc,
   Devices
 } from "./abletonProject.types";
@@ -106,28 +104,13 @@ const samplerExtractor = ({Player: {MultiSampleMap: {SampleParts}}}: any) => {
   return results
 }
 
-const drumGroupExtractor = ({Branches}: DrumGroup) => {
-  let results = {};
-  for(let [key, value] of Object.entries(Branches) ) {
-    // console.log('drumBranch', value)
-    results = {...results, [key]: {...deviceChainExtractor(value.DeviceChain)}}
-  }
-  return results
-}
 
-const instrumentGroupExtractor = ({Branches}: InstrumentGroup): object=> {
+
+const groupExtractor = ({Branches}: DeviceGroup) => {
+  // console.group('audioEffectBranches', Branches)
   let results:any = {};
   for(let [key, value] of Object.entries(Branches)) {
-    results[nameExtractor(value.Name)] = deviceChainExtractor(value.DeviceChain)
-  }
-  return results
-}
-
-const effectGroupExtractor = ({Branches}: AudioEffectGroup) => {
-  console.group('audioEffectBranches', Branches)
-  let results:any = {};
-  for(let [key, value] of Object.entries(Branches)) {
-    results[nameExtractor(value.Name)] = deviceChainExtractor(value.DeviceChain)
+    results[nameExtractor(value.Name ?? key)] = deviceChainExtractor(value.DeviceChain)
   }
   return results
 }
@@ -135,7 +118,7 @@ const effectGroupExtractor = ({Branches}: AudioEffectGroup) => {
 const pluginExtractor = ({ PluginDesc }: any): any => {
   const results: any = {};
   for (let [key, value] of Object.entries(PluginDesc)) {
-    console.log(value);
+    // console.log(value);
     let { PlugName, Name, Preset, Manufacturer }: any = value;
     results[PlugName ?? Name] = {
       type: Object.keys(Preset)[0].includes("Vst3")
@@ -153,29 +136,19 @@ const pluginExtractor = ({ PluginDesc }: any): any => {
 const deviceExtractor = ({Devices}: {Devices: Devices}): object => {
   if (!Devices) return {}
   const list: any = {};
-  console.log('Devices')
-  console.log(Devices)
+  // console.log('Devices')
+  // console.log(Devices)
   for(let [key, value] of Object.entries(Devices)) {
-    console.log(key)
+    // console.log(key)
     if (key.includes('PluginDevice')) {
       list[nanoid()] = pluginExtractor(value)
       continue;
     }
-    if (key.includes('EffectGroup')) {
-      list[nanoid()] = effectGroupExtractor(value)
-      continue;
-    }
-    if (key.includes('InstrumentGroup')) {
-      console.log('InstrumentGroup')
-      list[nanoid()] = instrumentGroupExtractor(value)
-      continue;
-    }
-    if (key.includes('DrumGroup')) {
-      list[nanoid()] = drumGroupExtractor(value)
+    if (key.includes('InstrumentGroup') || key.includes('EffectGroup') || key.includes('DrumGroup')) {
+      list[nanoid()] = groupExtractor(value)
       continue;
     }
     if (key.includes('MultiSampler') || key.includes('Simpler')) {
-      console.log('SAMPLER DETECTED')
       list[nanoid()] = samplerExtractor(value)
       continue;
     }
@@ -208,14 +181,15 @@ const findData = function findInformationInProject(
   object: AbletonProject
 ) {
 
-  let results = {};
+  let results: any = {};
   let tracks = {
     ...object.Ableton.LiveSet.Tracks,
     MasterTrack: object.Ableton.LiveSet.MasterTrack
   }
-  console.log(tracks)
+  // console.log(tracks)
   for(let [key,value] of Object.entries(tracks)) {
-    results = {...results, ...trackExtractor(value)}
+    let extractedData = trackExtractor(value)
+    results[key] = extractedData;
   }
   
   
