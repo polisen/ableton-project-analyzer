@@ -10,7 +10,7 @@ import {
   Branch,
   DeviceGroup,
   PluginDesc,
-  Devices
+  Devices,
 } from "./abletonProject.types";
 
 export const bigTask = async (file: any) => {
@@ -26,7 +26,7 @@ export const bigTask = async (file: any) => {
           const parsedXML = txml.parse(XMLstring);
           console.log(parsedXML);
           let projectObj = recursiveFormat("root", parsedXML);
-          console.log(projectObj)
+          console.log(projectObj);
           findData(projectObj);
           // featureExtractor(projectObj);
         } else {
@@ -84,43 +84,52 @@ const recursiveFormat = function recursiveProjectInfoFormatter(
  * @param Patterns - shapes of data to find.
  */
 
-
 const nameExtractor = (Name: TrackName) => {
   return Name.MemorizedFirstClipName ?? Name.EffectiveName;
-}
+};
 
-const fileExtractor = ({OriginalFileSize, Path, RelativePath}: any) => {
+const fileExtractor = ({ OriginalFileSize, Path, RelativePath }: any) => {
   // console.log(OriginalFileSize, Path, RelativePath)
-  return {OriginalFileSize, Path, RelativePath};
-}
+  return { OriginalFileSize, Path, RelativePath };
+};
 
-const samplerExtractor = ({Player: {MultiSampleMap: {SampleParts}}}: any) => {
+const samplerExtractor = ({
+  Player: {
+    MultiSampleMap: { SampleParts },
+  },
+}: any) => {
   // console.log(SampleParts)
-  let results = {}
-  for(let [key, value] of Object.entries(SampleParts)) {
-    let {SampleRef: {DefaultDuration, DefaultSampleRate, FileRef}}: any = value;
-    results = {...results, [key]: {DefaultDuration, DefaultSampleRate, ...fileExtractor(FileRef)}}
+  let results = {};
+  for (let [key, value] of Object.entries(SampleParts)) {
+    let {
+      SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
+    }: any = value;
+    results = {
+      ...results,
+      [key]: { DefaultDuration, DefaultSampleRate, ...fileExtractor(FileRef) },
+    };
   }
-  return results
-}
+  return results;
+};
 
-
-
-const groupExtractor = ({Branches}: DeviceGroup) => {
+const groupExtractor = ({ Branches }: DeviceGroup) => {
   // console.group('audioEffectBranches', Branches)
-  let results:any = {};
-  for(let [key, value] of Object.entries(Branches)) {
-    results[nameExtractor(value.Name ?? key)] = deviceChainExtractor(value.DeviceChain)
+  let results: any = {};
+  for (let [key, value] of Object.entries(Branches)) {
+    results[nameExtractor(value.Name ?? key)] = deviceChainExtractor(
+      value.DeviceChain
+    );
   }
-  return results
-}
+  return results;
+};
 
 const pluginExtractor = ({ PluginDesc }: any): any => {
   const results: any = {};
   for (let [key, value] of Object.entries(PluginDesc)) {
     // console.log(value);
     let { PlugName, Name, Preset, Manufacturer }: any = value;
-    results[PlugName ?? Name] = {
+    results[nanoid()] = {
+      Name: PlugName ?? Name,
       type: Object.keys(Preset)[0].includes("Vst3")
         ? "VST3"
         : Object.keys(Preset)[0].includes("Au")
@@ -132,69 +141,153 @@ const pluginExtractor = ({ PluginDesc }: any): any => {
   return results;
 };
 
+const giveNewKeys = (obj: any) => {
+  let newObj: any = {};
+  Object.keys(obj).forEach((key) => (newObj[nanoid()] = obj[key]));
+  return newObj;
+};
 
-const deviceExtractor = ({Devices}: {Devices: Devices}): object => {
-  if (!Devices) return {}
+const deviceExtractor = ({ Devices }: { Devices: Devices }): object => {
+  if (!Devices) return {};
   const list: any = {};
-  // console.log('Devices')
-  // console.log(Devices)
-  for(let [key, value] of Object.entries(Devices)) {
-    // console.log(key)
-    if (key.includes('PluginDevice')) {
-      list[nanoid()] = pluginExtractor(value)
+
+  for (let [key, value] of Object.entries(Devices)) {
+    if (key.includes("PluginDevice")) {
+      let info = pluginExtractor(value);
+      list["plugins"] = { ...list["plugins"], ...info };
       continue;
     }
-    if (key.includes('InstrumentGroup') || key.includes('EffectGroup') || key.includes('DrumGroup')) {
-      list[nanoid()] = groupExtractor(value)
+    if (
+      key.includes("InstrumentGroup") ||
+      key.includes("EffectGroup") ||
+      key.includes("DrumGroup")
+    ) {
+      let info = groupExtractor(value);
+      for (let [key, value] of Object.entries(info)) {
+        let { samples, plugins }: any = value;
+        list["samples"] = { ...list["samples"], ...samples };
+        list["plugins"] = { ...list["plugins"], ...plugins };
+      }
       continue;
     }
-    if (key.includes('MultiSampler') || key.includes('Simpler')) {
-      list[nanoid()] = samplerExtractor(value)
+    if (key.includes("MultiSampler") || key.includes("Simpler")) {
+      let info = samplerExtractor(value);
+      list["samples"] = { ...list["samples"], ...giveNewKeys(info) };
       continue;
     }
   }
-  return list
-}
+  return list;
+};
 
-const audioExtractor = (MainSequencer: (AudioMainSequencer | MidiMainSequencer)): object => {
-  return {}
-}
+const clipSlotExtractor = ({ ClipSlot }: any): any => {
+  let samples: any = {};
+  if (!ClipSlot.Value) return {};
+  for (let [key, value] of Object.entries(ClipSlot.Value)) {
+    const {
+      SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
+    }: any = value;
+    samples[nanoid()] = {
+      DefaultDuration,
+      DefaultSampleRate,
+      ...fileExtractor(FileRef),
+    };
+  }
+  return samples;
+};
 
-const getDeviceChainName = (arr: string[]): string => arr.length === 1 ? arr[0] : arr.filter((k)=> k.includes('DeviceChain'))[0]
+const sampleExtractor = (sample: any) => {
+  const {
+    SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
+  }: any = sample;
+  return {
+    [nanoid()]: {
+      DefaultDuration,
+      DefaultSampleRate,
+      ...fileExtractor(FileRef),
+    },
+  };
+};
+
+const audioExtractor = (MainSequencer: AudioMainSequencer): object => {
+  if (!MainSequencer.Sample) return {};
+  if (!MainSequencer.Sample.ArrangerAutomation.Events) return {};
+  console.log(MainSequencer.Sample);
+  const list: any = {};
+
+  for (let [key, value] of Object.entries(MainSequencer.ClipSlotList)) {
+    list["samples"] = { ...list["samples"], ...clipSlotExtractor(value) };
+  }
+  for (let [key, value] of Object.entries(
+    MainSequencer.Sample.ArrangerAutomation.Events
+  )) {
+    list["samples"] = { ...list["samples"], ...sampleExtractor(value) };
+  }
+
+  return list;
+};
+
+const getDeviceChainName = (arr: string[]): string =>
+  arr.length === 1 ? arr[0] : arr.filter((k) => k.includes("DeviceChain"))[0];
 
 const deviceChainExtractor = (DeviceChain: any) => {
-  let {MainSequencer} = DeviceChain;
+  let { MainSequencer } = DeviceChain;
   return {
     ...(MainSequencer ? audioExtractor(MainSequencer) : {}),
-    ...deviceExtractor((DeviceChain.DeviceChain ?? DeviceChain[getDeviceChainName(Object.keys(DeviceChain))]))
-  }
-}
+    ...deviceExtractor(
+      DeviceChain.DeviceChain ??
+        DeviceChain[getDeviceChainName(Object.keys(DeviceChain))]
+    ),
+  };
+};
 
-const trackExtractor = ({Name, DeviceChain}: AbletonTrack) => {
+const trackExtractor = ({ Name, DeviceChain }: AbletonTrack) => {
   return {
     Name: nameExtractor(Name),
-    ...deviceChainExtractor(DeviceChain)
-  }
-}
+    ...deviceChainExtractor(DeviceChain),
+  };
+};
 
-const findData = function findInformationInProject(
-  object: AbletonProject
-) {
-
+const findData = function findInformationInProject(object: AbletonProject) {
   let results: any = {};
   let tracks = {
     ...object.Ableton.LiveSet.Tracks,
-    MasterTrack: object.Ableton.LiveSet.MasterTrack
-  }
+    MasterTrack: object.Ableton.LiveSet.MasterTrack,
+  };
   // console.log(tracks)
-  for(let [key,value] of Object.entries(tracks)) {
-    let extractedData = trackExtractor(value)
-    results[key] = extractedData;
+  for (let [key, value] of Object.entries(tracks)) {
+    let extractedData = trackExtractor(value);
+    let { samples, plugins }: any = extractedData;
+    results["samples"] = { ...results["samples"], ...samples };
+    results["plugins"] = { ...results["plugins"], ...plugins };
   }
-  
-  
-  console.log(results)
-  return results
+  results.samples = stripDuplicateSamples(results.samples)
+  results.plugins = stripDuplicatePlugins(results.plugins)
+
+  console.log(results);
+  return results;
+};
+
+const stripDuplicateSamples = (obj: any) => {
+  let arr: any = []
+  let object: any = {};
+  for(let [key, value] of Object.entries(obj)) {
+    let {Path}: any = value;
+    if (!arr.includes(Path)) object[key] = value
+    arr.push(Path)
+  }
+  return object
+};
+
+const stripDuplicatePlugins = (obj: any) => {
+  let pathObj: any = {AU: {}, VST3: {}, VST: {}}
+  let object: any = {};
+  for(let [key, value] of Object.entries(obj)) {
+    let {Name, type}: any = value;
+    if (pathObj[type][Name]) continue;
+    object[key] = value;
+    pathObj[type][Name] = true;
+  }
+  return object
 };
 
 /**
