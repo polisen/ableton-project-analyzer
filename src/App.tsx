@@ -2,8 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react'
 import "./App.css";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
-import { wrap } from "comlink";
-import {buildDirectoryStructure} from './directoryStructure'
 import { useAbletonAnalyzer } from "./App.hooks";
 
 
@@ -44,8 +42,6 @@ function App() {
 
   const results = useAbletonAnalyzer(files[0]);
   
-
-
   const {
     acceptedFiles,
     fileRejections,
