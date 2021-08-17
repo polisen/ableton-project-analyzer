@@ -3,7 +3,8 @@ import "./App.css";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import { wrap } from "comlink";
-// import { greet } from './greeting.worker';
+import {buildDirectoryStructure} from './directoryStructure'
+import { useAbletonAnalyzer } from "./App.hooks";
 
 
 const Background = styled.div`
@@ -38,10 +39,12 @@ const Dropzone: any = styled.div`
 `;
 
 function App() {
-  const [worker, setWorker] = useState(
-    new Worker("./worker", { name: "runBigTask", type: "module" })
-  );
-  const { AbletonProjectAnalyzer } = wrap<import("./workerFiles/worker").AbletonProjectAnalyzerType>(worker);
+
+  const [files, setFiles] = useState<Array<File>>([]);
+
+  const results = useAbletonAnalyzer(files[0]);
+  
+
 
   const {
     acceptedFiles,
@@ -51,19 +54,15 @@ function App() {
     isDragActive,
     isDragAccept,
     isDragReject
-  } = useDropzone({});
+  }= useDropzone({});
 
 
   useEffect(() => {
-    async function big(file: any) {
-      await AbletonProjectAnalyzer(file);
-    }
-    if (acceptedFiles.length > 0) {
-      acceptedFiles.map(file => big(file))
-    }
-
+    setFiles(acceptedFiles);
   }, [acceptedFiles]);
-
+  useEffect(() => {
+    console.log(`results`, results)
+  }, [results]);
 
   const acceptedFileItems = acceptedFiles.map((file: any) => (
     <li key={file.path}>

@@ -20,25 +20,26 @@ import {
   getDeviceChainName,
   giveNewKeys,
   fileExtractor,
-  logFileData
+  logFileData,
 } from "./utility";
 
-export const bigTask = async (file: any) => {
+
+
+export async function bigTask(file: any) {
+  if (file instanceof Blob !== true) return {};
   if (file) {
-    let r = new FileReader();
-    r.onload = function (e: any) {
+    console.log(file)
+    let results = {};
       logFileData(file);
       try {
         if (file.type.includes("gzip") || file.name.includes(".als")) {
-          let XMLstring = pako.inflate(new Uint8Array(e.target.result), {
+          let XMLstring = pako.inflate(new Uint8Array(await file.arrayBuffer()), {
             to: "string",
           });
           const parsedXML = txml.parse(XMLstring);
-          console.log(parsedXML);
           let projectObj = recursiveFormat("root", parsedXML);
-          console.log(projectObj);
-          findData(projectObj);
-          // featureExtractor(projectObj);
+          let projectData = findData(projectObj);
+          results = projectData;
         } else {
           // ...
         }
@@ -46,10 +47,13 @@ export const bigTask = async (file: any) => {
       } catch (e) {
         console.error(e);
       }
-    };
-    r.readAsArrayBuffer(file);
+
+    console.log({results})
+    return results;
   }
-};
+  return {};
+}
+
 
 /**
  * Recursively traverses object structure, recursing for each layer, returning a simplified version of the layer.
@@ -159,6 +163,7 @@ const clipSlotExtractor = ({ ClipSlot }: any): any => {
 };
 
 const sampleExtractor = (sample: any) => {
+  console.log(sample);
   const {
     SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
   }: any = sample;
@@ -200,7 +205,6 @@ const deviceChainExtractor = (DeviceChain: any) => {
   };
 };
 
-
 const deviceExtractor = ({ Devices }: { Devices: Devices }): object => {
   if (!Devices) return {};
   const list: any = {};
@@ -234,7 +238,9 @@ const deviceExtractor = ({ Devices }: { Devices: Devices }): object => {
 };
 
 const findData = function findInformationInProject(object: AbletonProject) {
-  let results: any = {};
+  let results: any = {
+    bpm: parseInt(object.Ableton.LiveSet.TimeSelection.AnchorTime),
+  };
   let tracks = {
     ...object.Ableton.LiveSet.Tracks,
     MasterTrack: object.Ableton.LiveSet.MasterTrack,
@@ -252,6 +258,5 @@ const findData = function findInformationInProject(object: AbletonProject) {
   results.samples = stripDuplicateSamples(results.samples);
   results.plugins = stripDuplicatePlugins(results.plugins);
 
-  console.log(results);
   return results;
 };

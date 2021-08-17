@@ -5,6 +5,9 @@ export interface AbletonProject {
         [key: string]: AbletonTrack
       };
       MasterTrack: AbletonTrack;
+      TimeSelection: {
+        AnchorTime: string;
+      }
     };
   };
 }
@@ -35,8 +38,7 @@ export interface DeviceChain {
   };
 }
 
-export type Devices = {[key: string]: AbletonPlugin | DeviceGroup | PluginDevice}
-type AbletonPlugin = MultiSampler | OriginalSimpler;
+export type Devices = AbletonPlugin | DeviceGroup | PluginDevice;
 
 
 export interface AudioMainSequencer {
@@ -49,9 +51,7 @@ export interface AudioMainSequencer {
   Sample: {
     // arranger view samples
     ArrangerAutomation: {
-      Events: {
-        [key: string]: AudioClip
-      }
+      Events: AudioClip;
     };
   };
 }
@@ -79,15 +79,15 @@ export interface Branch {
 }
 
 
-
+type AbletonPlugin = DeviceGroup | MultiSampler | OriginalSimpler
 
 
 interface MultiSampler {
-  Player?: Player;
+  Player: Player;
 }
 
 interface OriginalSimpler {
-  Player?: Player;
+  Player: Player;
 }
 
 interface Player {
@@ -103,7 +103,9 @@ interface Player {
 }
 
 interface PluginDevice {
+  [key: string]: {
     PluginDesc: PluginDesc;
+  }
 }
 
 export interface PluginDesc {
@@ -139,6 +141,7 @@ interface FileRef {
 }
 
 interface AudioClip {
+
     Name: string;
     SampleRef: {
       // Duration in minutes base10 = DefaultDuration / DefaultSampleRate / 60

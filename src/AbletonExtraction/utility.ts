@@ -63,7 +63,7 @@ export const fileExtractor = ({
   RelativePath,
 }: any) => {
   // console.log(OriginalFileSize, Path, RelativePath)
-  return { OriginalFileSize, Path, RelativePath };
+  return { OriginalFileSize, Path, RelativePath, FileName: Path.split('/').slice(-1)[0]  };
 };
 
 export const getDeviceChainName = (arr: string[]): string =>
