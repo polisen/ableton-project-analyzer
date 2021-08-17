@@ -5,6 +5,9 @@ export interface AbletonProject {
         [key: string]: AbletonTrack
       };
       MasterTrack: AbletonTrack;
+      TimeSelection: {
+        AnchorTime: string;
+      }
     };
   };
 }
