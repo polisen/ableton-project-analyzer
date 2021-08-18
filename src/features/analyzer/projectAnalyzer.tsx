@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import { useAbletonAnalyzer } from "./projectAnalyzer.hooks";
 import { buildDirectoryStructure } from "../../AbletonExtraction/utility";
-import {useDispatch, useSelector} from 'react-redux';
-import {reduceFiles, FileStructureState} from './analyzerSlice'
-import {FileItem} from './FileItem'
+import { useDispatch, useSelector } from "react-redux";
+import { reduceFiles, setAcceptedFiles } from "./analyzerSlice";
+import { FileItem } from "./FileItem";
 
 const getColor = (props: any) => {
   if (props.isDragAccept) {
@@ -21,7 +21,7 @@ const getColor = (props: any) => {
 };
 
 const Dropzone: any = styled.div`
-  height: 18em;
+  height: 36em;
   width: 36em;
   background-color: #121212;
   border-radius: 8px;
@@ -29,9 +29,12 @@ const Dropzone: any = styled.div`
   border-color: ${(props) => getColor(props)}; ;
 `;
 
+
+
+
 const Analyzer = () => {
-  const endFiles = useSelector(({fileStructure}:any) => fileStructure.files)
-const dispatch = useDispatch();
+  const endFiles = useSelector(({ fileStructure }: any) => fileStructure.files);
+  const dispatch = useDispatch();
   const {
     acceptedFiles,
     fileRejections,
@@ -40,8 +43,7 @@ const dispatch = useDispatch();
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({disabled: Object.keys(endFiles).length > 0});
-
+  } = useDropzone({ disabled: Object.keys(endFiles).length > 0 });
 
   const [files, setFiles] = useState<Array<any>>([[{}, ""]]);
   const [folderStructure, setFolderStructure] = useState({});
@@ -58,19 +60,28 @@ const dispatch = useDispatch();
   }, [folderStructure]);
 
   useEffect(() => {
+    if (acceptedFiles.length === 0) return;
+    // dispatch(setAcceptedFiles(acceptedFiles));
     setFolderStructure(buildDirectoryStructure(acceptedFiles));
   }, [acceptedFiles]);
 
   useEffect(() => {
-    dispatch(reduceFiles(results))
+    dispatch(reduceFiles(results));
   }, [results, folderStructure]);
-  console.log(`endFiles`, endFiles)
+  console.log(`endFiles`, endFiles);
 
   return (
     <>
-      <Dropzone {...getRootProps({ isDragActive, isDragAccept, isDragReject })} noClick={acceptedFiles.length > 0} >
+      <Dropzone
+        {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
+        noClick={acceptedFiles.length > 0}
+      >
         <input {...getInputProps()} />
-        {Object.entries(endFiles).map(([key,value]) => <FileItem key={key} value={value}/>)}
+        <div style={{ width: "100%", height: "100%", overflow: "scroll" }}>
+          {Object.entries(endFiles).map(([key, value]) => (
+            <FileItem key={key} value={value} />
+          ))}
+        </div>
       </Dropzone>
     </>
   );
