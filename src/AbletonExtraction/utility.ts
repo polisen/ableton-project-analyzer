@@ -1,13 +1,5 @@
 import {
-  AbletonProject,
-  AbletonTrack,
   TrackName,
-  AudioMainSequencer,
-  MidiMainSequencer,
-  Branch,
-  DeviceGroup,
-  PluginDesc,
-  Devices,
 } from "./AbletonExtraction.types";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -33,6 +25,20 @@ export const stripDuplicatePlugins = (obj: any) => {
   }
   return object;
 };
+
+export const buildDirectoryStructure = (arr: File[]) => {
+  let obj: any = {};
+  if (arr.length <= 0) return {};
+  console.log(arr)
+  arr.forEach(function(file: any) {
+      let {path}: {path: string} = file;
+      path.split('/').filter(f => f).reduce(function(r:any, e:any) {
+        return r[e] || (r[e] = {})
+      }, obj)
+    })
+  return obj;
+};
+
 
 /**
  * Logs metadata about file.

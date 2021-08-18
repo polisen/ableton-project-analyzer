@@ -1,9 +1,9 @@
 import {expose} from 'comlink';
-import {bigTask} from './AbletonExtraction';
+import {fileStructureAnalyzer} from './AbletonExtraction';
 
 
 const worker = {
-    bigTask
+    fileStructureAnalyzer
 }
 
 export type BigTaskWorker = typeof worker;

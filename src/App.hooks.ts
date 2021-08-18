@@ -3,20 +3,20 @@ import { useEffect, useState, useMemo } from "react";
 
 
 export function useAbletonAnalyzer(
-    file: File
+    files: [File, string][],
+    fileStructure: object
 ) {
   const [data, setData] = useState({});
 
   const { workerApi } = useWorker();
 
   useEffect(() => {
-      console.log(file instanceof Blob)
-    if (file instanceof Blob !== true) return;
+    if (files[0][0] instanceof Blob !== true) return;
     console.log('passed')
     workerApi
-      .bigTask(file)
+      .fileStructureAnalyzer(files, fileStructure)
       .then((results:object) => setData(results)); 
-  }, [workerApi, setData, file]);
+  }, [workerApi, setData, files]);
 
   return data;
 }

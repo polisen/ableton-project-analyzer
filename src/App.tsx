@@ -3,7 +3,7 @@ import "./App.css";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import { useAbletonAnalyzer } from "./App.hooks";
-
+import {buildDirectoryStructure} from './AbletonExtraction/utility'
 
 const Background = styled.div`
   width: 100vw;
@@ -38,9 +38,9 @@ const Dropzone: any = styled.div`
 
 function App() {
 
-  const [files, setFiles] = useState<Array<File>>([]);
-
-  const results = useAbletonAnalyzer(files[0]);
+  const [files, setFiles] = useState<Array<any>>([[{},'']]);
+  const [folderStructure, setFolderStructure] = useState({});
+  const results = useAbletonAnalyzer(files, folderStructure);
   
   const {
     acceptedFiles,
@@ -54,11 +54,19 @@ function App() {
 
 
   useEffect(() => {
-    setFiles(acceptedFiles);
-  }, [acceptedFiles]);
+    if (Object.keys(folderStructure).length === 0) return; 
+    let acceptedFilesWithPath = acceptedFiles.map((file: any )=> [file, file.path])
+    // console.log(acceptedFilesWithPath)
+    setFiles(acceptedFilesWithPath);
+  }, [folderStructure]);
+
   useEffect(() => {
-    console.log(`results`, results)
-  }, [results]);
+    setFolderStructure(buildDirectoryStructure(acceptedFiles))
+  }, [acceptedFiles]);
+
+  useEffect(() => {
+    console.log(`results`, results, folderStructure);
+  }, [results, folderStructure]);
 
   const acceptedFileItems = acceptedFiles.map((file: any) => (
     <li key={file.path}>

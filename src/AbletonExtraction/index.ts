@@ -3,14 +3,10 @@ const txml = require("txml");
 import { nanoid } from "@reduxjs/toolkit";
 import {
   AbletonProject,
-  AbletonTrack,
-  TrackName,
   AudioMainSequencer,
-  MidiMainSequencer,
-  Branch,
   DeviceGroup,
-  PluginDesc,
   Devices,
+  FileRef,
 } from "./AbletonExtraction.types";
 
 import {
@@ -23,37 +19,105 @@ import {
   logFileData,
 } from "./utility";
 
+const getPathFromOrigin = (relative: string, origin: string) => {
+  try {
+    let rPathArr = relative.split("/").filter((x) => x);
+    let oPathArr = origin.split("/").filter((x) => x);
+    let newArr = [];
+    let oLength = oPathArr.length - 1;
+    for (let e of rPathArr) {
+      if (e === "..") oLength--;
+      else newArr.push(e);
+    }
 
-
-export async function bigTask(file: any) {
-  if (file instanceof Blob !== true) return {};
-  if (file) {
-    console.log(file)
-    let results = {};
-      logFileData(file);
-      try {
-        if (file.type.includes("gzip") || file.name.includes(".als")) {
-          let XMLstring = pako.inflate(new Uint8Array(await file.arrayBuffer()), {
-            to: "string",
-          });
-          const parsedXML = txml.parse(XMLstring);
-          let projectObj = recursiveFormat("root", parsedXML);
-          let projectData = findData(projectObj);
-          results = projectData;
-        } else {
-          // ...
-        }
-        // ...
-      } catch (e) {
-        console.error(e);
-      }
-
-    console.log({results})
-    return results;
+    if (oLength < 0) throw new Error("path out of bounds");
+    let newHead = oPathArr.slice(0, oLength);
+    newArr = [...newHead, ...newArr];
+    return newArr;
+  } catch (error) {
+    // console.error(error);
+    return []
   }
-  return {};
+};
+
+const findInStructure = (path: string[], structure: any) => {
+  // console.log(structure)
+  let currentStructure = structure
+  for(let p of path) {
+    // console.log(p)
+
+    if (currentStructure[p]) currentStructure = currentStructure[p]
+    else return false
+    // console.log(currentStructure)
+  }
+  return true;
 }
 
+export const verifyExistence = (
+  samples: { [key: string]: FileRef },
+  fileStructure: object,
+  originPath: string
+) => {
+  const results: {[key:string]:string | boolean} = {}
+  for (let [key, value] of Object.entries(samples)) {
+    let { RelativePath } = value;
+    let samplePath = getPathFromOrigin(RelativePath, originPath);
+    if (!samplePath.length) results[key] = 'out-of-bounds'
+    else {
+      results[key] = findInStructure(samplePath, fileStructure)
+    }
+  }
+
+  return results;
+};
+
+export const fileStructureAnalyzer = async (
+  files: [File, string][],
+  fileStructure: object
+) => {
+  // console.log('init')
+  let results: { [key: string]: object } = {};
+  // console.log(`fileStructure`, fileStructure)
+  // console.log(files)
+  for (let [file, path] of files) {
+    // console.log(path)
+    if (file instanceof Blob !== true) continue;
+    if (path.includes('Backup')) continue;
+    if (file.name.includes(".als")) {
+      console.log('PROCeSSING PAtH', path)
+      let abletonResults: any = await projectAnalyzer(file);
+      let verifiedSamples = verifyExistence(
+        abletonResults.samples,
+        fileStructure,
+        path
+      );
+      results[nanoid()] = {
+        ...file,
+        fileName: file.name,
+        path,
+        ...abletonResults,
+        verifiedSamples
+      }
+    }
+  }
+  return results;
+};
+
+export async function projectAnalyzer(file: any) {
+  let results = {};
+  try {
+    let XMLstring = pako.inflate(new Uint8Array(await file.arrayBuffer()), {
+      to: "string",
+    });
+    const parsedXML = txml.parse(XMLstring);
+    let projectObj = recursiveFormat("root", parsedXML);
+    let projectData = findData(projectObj);
+    results = projectData;
+  } catch (e) {
+    console.error(e);
+  }
+  return results;
+}
 
 /**
  * Recursively traverses object structure, recursing for each layer, returning a simplified version of the layer.
@@ -163,7 +227,7 @@ const clipSlotExtractor = ({ ClipSlot }: any): any => {
 };
 
 const sampleExtractor = (sample: any) => {
-  console.log(sample);
+  // console.log(sample);
   const {
     SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
   }: any = sample;
@@ -241,6 +305,7 @@ const findData = function findInformationInProject(object: AbletonProject) {
   let results: any = {
     bpm: parseInt(object.Ableton.LiveSet.TimeSelection.AnchorTime),
   };
+  // console.log(object)
   let tracks = {
     ...object.Ableton.LiveSet.Tracks,
     MasterTrack: object.Ableton.LiveSet.MasterTrack,

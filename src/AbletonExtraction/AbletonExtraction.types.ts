@@ -134,7 +134,7 @@ interface Buffer {
   [key: string]: string;
 }
 
-interface FileRef {
+export interface FileRef {
   OriginalFileSize: string;
   Path: string;
   RelativePath: string;
