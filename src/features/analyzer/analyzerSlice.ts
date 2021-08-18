@@ -2,12 +2,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 
 export interface FileStructureState {
-  value: number;
+  files: {
+    [key:string]: object
+  }
 }
 
 const initialState: any = {
-  value: 0,
-  status: 'idle',
+  files: {},
 };
 
 
@@ -16,13 +17,13 @@ export const fileStructureAnalyzer = createSlice({
   name: 'fileStructure',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    reduceFiles: (state, action: PayloadAction<object>) => {
+      state.files = action.payload;
     },
   },
 });
 
-export const { increment } = fileStructureAnalyzer.actions;
+export const { reduceFiles } = fileStructureAnalyzer.actions;
 
 
 export default fileStructureAnalyzer.reducer;

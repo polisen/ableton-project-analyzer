@@ -84,7 +84,7 @@ export const fileStructureAnalyzer = async (
     if (file instanceof Blob !== true) continue;
     if (path.includes('Backup')) continue;
     if (file.name.includes(".als")) {
-      console.log('PROCeSSING PAtH', path)
+      // console.log('PROCeSSING PAtH', path)
       let abletonResults: any = await projectAnalyzer(file);
       let verifiedSamples = verifyExistence(
         abletonResults.samples,

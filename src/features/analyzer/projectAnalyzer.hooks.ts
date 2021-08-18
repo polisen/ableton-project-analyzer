@@ -12,7 +12,7 @@ export function useAbletonAnalyzer(
 
   useEffect(() => {
     if (files[0][0] instanceof Blob !== true) return;
-    console.log('passed')
+    // console.log('passed')
     workerApi
       .fileStructureAnalyzer(files, fileStructure)
       .then((results:object) => setData(results)); 

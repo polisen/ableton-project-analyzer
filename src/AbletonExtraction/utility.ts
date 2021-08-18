@@ -29,7 +29,7 @@ export const stripDuplicatePlugins = (obj: any) => {
 export const buildDirectoryStructure = (arr: File[]) => {
   let obj: any = {};
   if (arr.length <= 0) return {};
-  console.log(arr)
+  // console.log(arr)
   arr.forEach(function(file: any) {
       let {path}: {path: string} = file;
       path.split('/').filter(f => f).reduce(function(r:any, e:any) {
