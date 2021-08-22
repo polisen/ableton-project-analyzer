@@ -54,16 +54,12 @@ test("test all projects and assert the results", async () => {
     ...new Set(
       Object.entries(maxxed_verification).map(([key, value]) => value)
     ),
-  ];
-  console.log(maxxed_v_results)
+  ]; 
 
   expect(typeof maxxed_results).toBe("object");
   expect(maxxed_v_results.length).toBe(1);
   expect(maxxed_v_results[0]).toBe(true);
   expect(Object.keys(basic_result.samples).length).toBe(9)
-
-
-
 
   const nested = require("./nested_project.json");
   const nestedPath = "/test_projects/nested_project.als";

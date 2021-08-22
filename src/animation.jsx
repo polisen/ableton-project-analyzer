@@ -1,10 +1,9 @@
-
 import "./App.css";
 import styled from "styled-components";
-import { useLottie, useLottieInteractivity } from "lottie-react";
-
-
-import BounceData from "./bounce-lottie.json";
+import { useLottie } from "lottie-react";
+import React, { useEffect } from 'react'
+import BounceData from "./Check.json";
+import useHover from 'hooks/useHover'
 
 const Background = styled.div`
   width: 100vw;
@@ -15,13 +14,11 @@ const Background = styled.div`
   align-items: center;
 `;
 
-
-
 const options = {
   animationData: BounceData,
+  loop: false,
+  autoplay: false,
 };
-
-
 
 const style = {
   height: 700,
@@ -30,34 +27,37 @@ const style = {
   borderRadius: 7,
 };
 
+const InteractiveLottie = ({isHovered}) => {
+  const Lottie = useLottie(options, style);
+  let {View, animationItem, setDirection, play, stop} = Lottie;
+  useEffect(() => {
+      console.log(animationItem)
+  }, [animationItem]);
+  // Lottie.stop()
+  useEffect(() => {
+    if (isHovered) {
+      setDirection(1)
+      play()
+    } else {
+      setDirection(-1)
+      play()
+    }
+  }, [isHovered]);
+  return View;
+};
 
-export const InteractiveLottie = () => {
-  const lottieObj = useLottie(options, style);
-  const Animation = useLottieInteractivity({
-    lottieObj,
-    mode: "cursor",
-    actions: [
-      {
-        position: { x: [0, 1], y: [0, 1] },
-        type: "loop",
-        frames: [0, 60],
-      },
-      {
-        position: { x: -1, y: -1 },
-        type: "stop",
-        frames: [60],
-      },
-    ],
-  });
-  return Animation;
-}
+export const Wrapper = () => {
+  const [hoverRef, isHovered] = useHover()
 
-function Animation() {
+  useEffect(() => {
+    // console.log(isHovered);
+  }, [isHovered]);
+
   return (
-    <Background>
-      <InteractiveLottie/>
+    <Background ref={hoverRef}>
+      <InteractiveLottie {...{isHovered}}/>
     </Background>
   );
-}
+};
 
-export default Animation;
+export default Wrapper;
