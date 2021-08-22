@@ -1,5 +1,5 @@
 import {expose} from 'comlink';
-import {fileStructureAnalyzer} from '../../AbletonExtraction';
+import {fileStructureAnalyzer} from './AbletonExtraction';
 
 
 const worker = {

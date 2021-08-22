@@ -1,6 +1,6 @@
 import "./App.css";
 import styled from "styled-components";
-import Analyzer from "./features/analyzer/projectAnalyzer";
+import Analyzer from "./features/abletonAnalyzer/projectAnalyzer";
 
 const Background = styled.div`
   width: 100vw;

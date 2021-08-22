@@ -7,7 +7,7 @@ import {
   DeviceGroup,
   Devices,
   FileRef,
-} from "./AbletonExtraction.types";
+} from "./ProjectStructure.types";
 
 import {
   nameExtractor,
@@ -83,8 +83,7 @@ export const fileStructureAnalyzer = async (
     // console.log(path)
     if (file instanceof Blob !== true) continue;
     if (path.includes('Backup')) continue;
-    if (file.name.includes(".als")) {
-      // console.log('PROCeSSING PAtH', path)
+    if (['.als', '.adg', '.alp'].some(v => file.name.includes(v))) {
       let abletonResults: any = await projectAnalyzer(file);
       let verifiedSamples = verifyExistence(
         abletonResults.samples,
@@ -110,6 +109,7 @@ export async function projectAnalyzer(file: any) {
       to: "string",
     });
     const parsedXML = txml.parse(XMLstring);
+    console.log(parsedXML)
     let projectObj = recursiveFormat("root", parsedXML);
     let projectData = findData(projectObj);
     results = projectData;
@@ -227,7 +227,6 @@ const clipSlotExtractor = ({ ClipSlot }: any): any => {
 };
 
 const sampleExtractor = (sample: any) => {
-  // console.log(sample);
   const {
     SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
   }: any = sample;

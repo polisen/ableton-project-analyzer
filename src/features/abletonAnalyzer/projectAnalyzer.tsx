@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import { useAbletonAnalyzer } from "./projectAnalyzer.hooks";
-import { buildDirectoryStructure } from "../../AbletonExtraction/utility";
+import { buildDirectoryStructure } from "./AbletonExtraction/utility";
 import { useDispatch, useSelector } from "react-redux";
 import { reduceFiles, setAcceptedFiles } from "./analyzerSlice";
-import { FileItem } from "./FileItem";
+import { FileItem } from "../../components/FileItem";
 
 const getColor = (props: any) => {
   if (props.isDragAccept) {
@@ -21,8 +21,8 @@ const getColor = (props: any) => {
 };
 
 const Dropzone: any = styled.div`
-  height: 36em;
-  width: 36em;
+  height: 95%;
+  width: 95%;
   background-color: #121212;
   border-radius: 8px;
   border: 1px solid;
@@ -53,7 +53,7 @@ const Analyzer = () => {
     if (Object.keys(folderStructure).length === 0) return;
     let acceptedFilesWithPath = acceptedFiles.map((file: any) => [
       file,
-      file.path,
+      file.path, 
     ]);
     // console.log(acceptedFilesWithPath)
     setFiles(acceptedFilesWithPath);

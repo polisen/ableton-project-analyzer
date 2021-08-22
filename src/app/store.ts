@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import fileStructureReducer from '../features/analyzer/analyzerSlice';
+import fileStructureReducer from '../features/abletonAnalyzer/analyzerSlice';
 
 export const store = configureStore({
   reducer: {
