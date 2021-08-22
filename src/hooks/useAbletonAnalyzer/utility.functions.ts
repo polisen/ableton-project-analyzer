@@ -1,6 +1,6 @@
 import {
   TrackName,
-} from "./ProjectStructure.types";
+} from "./types/AbletonProjectStructure.types";
 import { nanoid } from "@reduxjs/toolkit";
 
 export const stripDuplicateSamples = (obj: any) => {

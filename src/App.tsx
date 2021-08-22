@@ -1,24 +1,16 @@
 import "./App.css";
 import styled from "styled-components";
 import Analyzer from "./features/abletonAnalyzer/projectAnalyzer";
-
-const Background = styled.div`
-  width: 100vw;
+import { Container } from "components/common";
+const Background = styled(Container.Flex)`
   height: 100vh;
   background-color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
-
-
 function App() {
-
-
   return (
     <Background>
-      <Analyzer/>
+      <Analyzer />
     </Background>
   );
 }

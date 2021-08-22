@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
-import { useAbletonAnalyzer } from "./projectAnalyzer.hooks";
-import { buildDirectoryStructure } from "./AbletonExtraction/utility";
+import {
+  useAbletonAnalyzer,
+  buildDirectoryStructure,
+} from "hooks/useAbletonAnalyzer";
 import { useDispatch, useSelector } from "react-redux";
-import { reduceFiles, setAcceptedFiles } from "./analyzerSlice";
-import { FileItem } from "../../components/FileItem";
+import { reduceFiles } from "./analyzerSlice";
+import { FileItem } from "../FileItem";
+import { Container } from "components/common";
 
 const getColor = (props: any) => {
   if (props.isDragAccept) {
@@ -17,7 +20,7 @@ const getColor = (props: any) => {
   if (props.isDragActive) {
     return "#2196f3";
   }
-  return "#eeeeee";
+  return "#3b3b3b";
 };
 
 const Dropzone: any = styled.div`
@@ -29,10 +32,14 @@ const Dropzone: any = styled.div`
   border-color: ${(props) => getColor(props)}; ;
 `;
 
-
-
+const ScrollContainer = styled(Container)`
+  overflow: scroll;
+`;
 
 const Analyzer = () => {
+  const [files, setFiles] = useState<Array<any>>([[{}, ""]]);
+  const [folderStructure, setFolderStructure] = useState({});
+  const results = useAbletonAnalyzer(files, folderStructure);
   const endFiles = useSelector(({ fileStructure }: any) => fileStructure.files);
   const dispatch = useDispatch();
   const {
@@ -45,30 +52,19 @@ const Analyzer = () => {
     isDragReject,
   } = useDropzone({ disabled: Object.keys(endFiles).length > 0 });
 
-  const [files, setFiles] = useState<Array<any>>([[{}, ""]]);
-  const [folderStructure, setFolderStructure] = useState({});
-  const results = useAbletonAnalyzer(files, folderStructure);
-
   useEffect(() => {
-    if (Object.keys(folderStructure).length === 0) return;
-    let acceptedFilesWithPath = acceptedFiles.map((file: any) => [
-      file,
-      file.path, 
-    ]);
-    // console.log(acceptedFilesWithPath)
-    setFiles(acceptedFilesWithPath);
+    if (Object.keys(folderStructure).length !== 0)
+      setFiles(acceptedFiles.map((file: any) => [file, file.path]));
   }, [folderStructure]);
 
   useEffect(() => {
-    if (acceptedFiles.length === 0) return;
-    // dispatch(setAcceptedFiles(acceptedFiles));
-    setFolderStructure(buildDirectoryStructure(acceptedFiles));
+    if (acceptedFiles.length !== 0)
+      setFolderStructure(buildDirectoryStructure(acceptedFiles));
   }, [acceptedFiles]);
 
   useEffect(() => {
     dispatch(reduceFiles(results));
   }, [results, folderStructure]);
-  console.log(`endFiles`, endFiles);
 
   return (
     <>
@@ -77,11 +73,11 @@ const Analyzer = () => {
         noClick={acceptedFiles.length > 0}
       >
         <input {...getInputProps()} />
-        <div style={{ width: "100%", height: "100%", overflow: "scroll" }}>
+        <ScrollContainer>
           {Object.entries(endFiles).map(([key, value]) => (
             <FileItem key={key} value={value} />
           ))}
-        </div>
+        </ScrollContainer>
       </Dropzone>
     </>
   );

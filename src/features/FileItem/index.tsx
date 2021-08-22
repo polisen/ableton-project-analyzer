@@ -4,25 +4,21 @@ import { useState, useRef } from "react";
 import { Chevron, Text, Container } from "components/common";
 import { ExpandingDrawer } from "./ExpandingDrawer";
 
-const IconContainer = styled(Container.Flex)`
-  width: 1.5em;
-  padding: 0 1em 0 1em;
-`;
-
 const StyledItemContainer = styled(Container.Flex)`
   justify-content: space-between;
-  color: white;
   padding: 10px;
   padding-left: 0px;
   border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid #3b3b3b;
+  margin-bottom: 2px;
   cursor: pointer;
   :hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.08);
   }
 `;
 
-const StyledItemInfo = styled(Container.Flex)`
+const FlexStart = styled(Container.Flex)`
   justify-content: flex-start;
   width: 90%;
 `;
@@ -39,24 +35,29 @@ const ItemContainer = styled.div`
 
 export const FileItem = ({ value }: any) => {
   const [expanded, setExpanded] = useState(false);
-  console.log(`value`, value);
+  let { fileName, verified, samples } = value;
   return (
     <ItemContainer>
       <StyledItemContainer onClick={() => setExpanded(!expanded)}>
-        <StyledItemInfo>
-          <IconContainer>
-            {value.verified ? <Check /> : <Cross />}
-          </IconContainer>
-          <AbletonIcon />
-          <Text>
-            {value.fileName.substr(0, value.fileName.lastIndexOf(".")) ||
-              value.fileName}
-            .als
-          </Text>
-        </StyledItemInfo>
+        <FlexStart>
+          <Container.Icon
+            margin={".5em"}
+            size={"1.5em"}
+            children={verified ? <Check /> : <Cross />}
+          />
+          <Text>{getFileName(fileName)}</Text>
+          <Container.Icon
+            margin={".5em"}
+            size={"1.5em"}
+            color={'#b3b3b3'}
+            children={<AbletonIcon />}
+          />
+        </FlexStart>
         <Chevron expanded={expanded} setExpanded={setExpanded} />
       </StyledItemContainer>
-      {value.samples && <ExpandingDrawer expanded={expanded} info={value} />}
+      {samples && <ExpandingDrawer expanded={expanded} info={value} />}
     </ItemContainer>
   );
 };
+
+const getFileName = (str: string): string => str.substr(0, str.lastIndexOf(".")) || str;

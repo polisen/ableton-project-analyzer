@@ -7,7 +7,7 @@ import {
   DeviceGroup,
   Devices,
   FileRef,
-} from "./ProjectStructure.types";
+} from "./types/AbletonProjectStructure.types";
 
 import {
   nameExtractor,
@@ -17,7 +17,7 @@ import {
   giveNewKeys,
   fileExtractor,
   logFileData,
-} from "./utility";
+} from "./utility.functions";
 
 const getPathFromOrigin = (relative: string, origin: string) => {
   try {
