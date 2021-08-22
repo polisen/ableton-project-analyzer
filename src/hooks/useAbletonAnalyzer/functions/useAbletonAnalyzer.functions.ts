@@ -32,6 +32,7 @@ export const fileStructureAnalyzer = async (
 ) => {
   let results: { [key: string]: object } = {};
   for (let [file, path] of files) {
+    console.log(`path`, path)
     if (file instanceof Blob !== true) continue;
     if (path.includes("Backup")) continue;
     if ([".als", ".adg", ".alp"].some((v) => file.name.includes(v))) {
@@ -65,19 +66,16 @@ export const fileStructureAnalyzer = async (
  */
 
 export async function projectAnalyzer(file: File) {
-  let results = {};
   try {
     let XMLstring = pako.inflate(new Uint8Array(await file.arrayBuffer()), {
       to: "string",
     });
     const parsedXML = txml.parse(XMLstring);
     const formatted = recursiveFormat("root", parsedXML)
-    console.log(file.name, formatted)
     return findData(formatted);
   } catch (e) {
     console.error(e);
   }
-  return results;
 }
 
 /**

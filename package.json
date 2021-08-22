@@ -48,6 +48,9 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+    "verbose": true
+  },
   "devDependencies": {
     "comlink": "^4.3.1",
     "comlink-loader": "^2.0.0",

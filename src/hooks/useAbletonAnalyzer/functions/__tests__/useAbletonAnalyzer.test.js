@@ -1,4 +1,4 @@
-import { projectAnalyzer } from "../useAbletonAnalyzer.functions";
+import { findData } from "../useAbletonAnalyzer.functions";
 import { verifyExistence } from "../verifyExistence.functions";
 
 /**
@@ -22,11 +22,67 @@ import { verifyExistence } from "../verifyExistence.functions";
 
 test("test all projects and assert the results", async () => {
   const fileStructure = require("./test_projects_filestructure.json");
+
   const basic = require("./basic_project.json");
-  const maxed = require("./maxxed_project.json");
+  const basicPath = "/test_projects/basic_project.als";
+  let basic_result = findData(basic);
+  let basic_verification = verifyExistence(
+    basic_result.samples,
+    fileStructure,
+    basicPath
+  );
+  let basic_v_results = [
+    ...new Set(Object.entries(basic_verification).map(([key, value]) => value)),
+  ];
+
+  expect(typeof basic_result).toBe("object");
+  expect(basic_v_results.length).toBe(1);
+  expect(basic_v_results[0]).toBe(true);
+  expect(Object.keys(basic_result.samples).length).toBe(9)
+  const maxxed = require("./maxxed_project.json");
+  const maxxedPath = "/test_projects/maxxed_project.als";
+  let maxxed_results = findData(maxxed);
+  let maxxed_verification = verifyExistence(
+    maxxed_results.samples,
+    fileStructure,
+    maxxedPath
+  );
+
+
+
+  let maxxed_v_results = [
+    ...new Set(
+      Object.entries(maxxed_verification).map(([key, value]) => value)
+    ),
+  ];
+  console.log(maxxed_v_results)
+
+  expect(typeof maxxed_results).toBe("object");
+  expect(maxxed_v_results.length).toBe(1);
+  expect(maxxed_v_results[0]).toBe(true);
+  expect(Object.keys(basic_result.samples).length).toBe(9)
+
+
+
+
   const nested = require("./nested_project.json");
-  expect(typeof fileStructure).toBe("object");
-  expect(typeof basic).toBe("object");
-  expect(typeof maxed).toBe("object");
-  expect(typeof nested).toBe("object");
+  const nestedPath = "/test_projects/nested_project.als";
+
+  let nested_results = findData(nested);
+  let nested_verification = verifyExistence(
+    nested_results.samples,
+    fileStructure,
+    nestedPath
+  );
+  let nested_v_results = [
+    ...new Set(
+      Object.entries(nested_verification).map(([key, value]) => value)
+    ),
+  ];
+
+  expect(typeof nested_results).toBe("object");
+  expect(nested_v_results.length).toBe(1);
+  expect(nested_v_results[0]).toBe(true);
+  expect(Object.keys(basic_result.samples).length).toBe(9)
+
 }, 10000);
