@@ -1,3 +1,3 @@
 export {useAbletonAnalyzer} from './useAbletonAnalyzer.hooks'
-export * from './utility.functions'
+export * from './functions/utility.functions'
 

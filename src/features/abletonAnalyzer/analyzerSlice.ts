@@ -1,15 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import {nanoid} from '@reduxjs/toolkit'
-export interface FileStructureState {
-  files: {
-    [key:string]: object
-  }
-}
+
 
 const initialState: any = {
   files: {},
 };
+
+
 
 
 

@@ -1,5 +1,5 @@
 import { expose } from "comlink";
-import { fileStructureAnalyzer } from "./useAbletonAnalyzer.functions";
+import { fileStructureAnalyzer } from "./functions/useAbletonAnalyzer.functions";
 
 const worker = {
   fileStructureAnalyzer,

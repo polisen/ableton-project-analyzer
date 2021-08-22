@@ -32,38 +32,45 @@ export interface TrackName {
 }
 
 export interface DeviceChain {
-  MainSequencer?: AudioMainSequencer | MidiMainSequencer;
-  DeviceChain: {
+  MainSequencer?: MainSequencer;
+  DeviceChain?: {
       Devices: Devices;
   };
+  Devices?: Devices
 }
 
-export type Devices = AbletonPlugin | DeviceGroup | PluginDevice;
+export type Devices = {
+  [key: string]: Device;
+}
+
+export type Device = AbletonPlugin | DeviceGroup | PluginDevice;
+type AbletonPlugin = DeviceGroup | Sampler
 
 
-export interface AudioMainSequencer {
+export interface MainSequencer {
   //clip view samples
   ClipSlotList: {
     ClipSlot: {
       Value: AudioClip;
     };
   };
-  Sample: {
+  Sample?: {
     // arranger view samples
     ArrangerAutomation: {
       Events: AudioClip;
     };
   };
-}
-
-export interface MidiMainSequencer {
-  ClipTimeable: {
+  ClipTimeable?: {
     ArrangerAutomation: {
       Events: {
         [key: string]: MidiClip;
       };
     };
   };
+}
+
+export interface MidiMainSequencer {
+
 }
 
 export interface DeviceGroup {
@@ -79,26 +86,26 @@ export interface Branch {
 }
 
 
-type AbletonPlugin = DeviceGroup | MultiSampler | OriginalSimpler
 
 
-interface MultiSampler {
+export interface Sampler {
   Player: Player;
 }
 
-interface OriginalSimpler {
-  Player: Player;
-}
 
 interface Player {
   MultiSampleMap: {
     SampleParts: {
-      [key: string]: {
-        SampleRef: {
-          FileRef: FileRef;
-        };
-      };
+      [key: string]: Sample;
     };
+  };
+}
+
+export interface Sample {
+  SampleRef: {
+    DefaultDuration: number;
+    DefaultSampleRate: number;
+    FileRef: FileRef;
   };
 }
 

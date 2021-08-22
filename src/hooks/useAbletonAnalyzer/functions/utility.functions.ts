@@ -1,6 +1,6 @@
 import {
   TrackName,
-} from "./types/AbletonProjectStructure.types";
+} from "../types/AbletonProjectStructure.types";
 import { nanoid } from "@reduxjs/toolkit";
 
 export const stripDuplicateSamples = (obj: any) => {
@@ -79,4 +79,43 @@ export const giveNewKeys = (obj: any) => {
   let newObj: any = {};
   Object.keys(obj).forEach((key) => (newObj[nanoid()] = obj[key]));
   return newObj;
+};
+
+
+
+/**
+ * Recursively traverses object structure, recursing for each layer, returning a simplified version of the layer.
+ * The recursive case is if there are no more children;
+ * @param obj - the processed output of txml.parse()
+ */
+
+export const recursiveFormat = function recursiveProjectInfoFormatter(
+  tagName: string,
+  arr: any
+) {
+  if (arr instanceof Array !== true) console.log(arr);
+  // console.log(tagName)
+  if (arr.length === 0) return;
+  let obj: any = {};
+  for (let child of arr) {
+    let { children, tagName, attributes } = child;
+    if (!children || !tagName || !attributes) {
+      return child;
+    }
+    if (children.length === 0 && attributes.Value)
+      if (Object.keys(attributes).length > 0) {
+        obj.attributes = attributes;
+      }
+    if (children.length > 0) {
+      obj = {
+        ...obj,
+        [attributes.Id ? `${tagName}_${attributes.Id}` : tagName]: {
+          ...recursiveFormat(tagName, children),
+        },
+      };
+    } else if (attributes.Value) {
+      obj = { ...obj, [tagName]: attributes.Value };
+    }
+  }
+  return obj;
 };
