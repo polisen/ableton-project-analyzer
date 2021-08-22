@@ -71,7 +71,9 @@ export async function projectAnalyzer(file: File) {
       to: "string",
     });
     const parsedXML = txml.parse(XMLstring);
-    return findData(recursiveFormat("root", parsedXML));
+    const formatted = recursiveFormat("root", parsedXML)
+    console.log(file.name, formatted)
+    return findData(formatted);
   } catch (e) {
     console.error(e);
   }
@@ -84,7 +86,7 @@ export async function projectAnalyzer(file: File) {
  * @param Patterns - shapes of data to find.
  */
 
-const findData = function findInformationInProject({
+export const findData = function findInformationInProject({
   Ableton: { LiveSet },
 }: AbletonProject) {
   let results: any = {};

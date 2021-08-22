@@ -65,6 +65,7 @@ const Analyzer = () => {
   useEffect(() => {
     dispatch(reduceFiles(results));
     console.log(results)
+    console.log('folderStructure', folderStructure)
   }, [results, folderStructure]);
 
   return (
