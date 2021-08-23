@@ -9,7 +9,7 @@ When it comes to many music creation softwares, such as Ableton, I've found, tho
 
 These questions are what I've set out to answer by creating this interface.
 
-###Caveats:
+### Caveats:
  - This project is a proof of concept.
  - This project is under rapid development.
  - Some additional documentation is provided within the code - especially within the useAbletonAnalyzer.functions.ts file.
