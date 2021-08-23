@@ -1,44 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Ableton Project Analyzer
 
-## Available Scripts
+Currently, the main way to share audio project files between collaborators is by zipping the appropriate project files and sending them over WeTransfer.
+This method is cumbersome and does not answer questions about compatibility.
 
-In the project directory, you can run:
+When it comes to many music creation softwares, such as Ableton, I've found, those question are mostly dependent on two main factors.
+ - Do both parties have the same plugins?
+ - Are all the required files present in the packet?
 
-### `yarn start`
+These questions are what I've set out to answer by creating this interface.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+###Caveats:
+ - This project is a proof of concept.
+ - This project is under rapid development.
+ - Some additional documentation is provided within the code - especially within the useAbletonAnalyzer.functions.ts file.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Technical Keypoints
+ - React
+ - Redux
+ - Web Workers
+ - Unit Testing
+ - TypeScript
+ - Custom Styling
+ - Custom Hooks
+ - Recursive Algorithm Design
 
-### `yarn test`
+### Instructions
+- `git clone https://github.com/polisen/ableton-project-analyzer.git`
+- install, start
+  - tests are available
+- Drag and drop folder from ./test_project on to area in UI.
+  - More test projects are available here: TBD
+  - Red cross on project means that not all the audio samples referenced in the project were found within the files provided.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Short Term Todo
+- [ ] Stronger Types
+- [ ] More unit testing
+- [ ] Integration Testing
+- [ ] Basic E2E Testing
+- [ ] UI Overhaul
+  - [ ] Lottie animation on hover
+  - [ ] Better presentation
+- [ ] Adding more test projects
+- [ ] One-Click demo 
+- [ ] Functionality
+  - [ ] Project Version
+  - [ ] Tempo
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
