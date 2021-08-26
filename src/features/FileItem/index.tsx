@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import { Ableton, Check, Cross, ChevronDown, ChevronUp } from "svg";
-import { useState, useRef } from "react";
-import { Chevron, Text, Container } from "components/common";
-import { ExpandingDrawer } from "./ExpandingDrawer";
+import * as React from 'react';
+import styled from 'styled-components';
+import { Ableton, Check, Cross } from 'svg';
+import { useState } from 'react';
+import { Chevron, Text, Container } from 'components/common';
+import Drawer from './ExpandingDrawer';
 
 const StyledItemContainer = styled(Container.Flex)`
   justify-content: space-between;
@@ -33,31 +34,28 @@ const ItemContainer = styled.div`
   width: 100%;
 `;
 
-export const FileItem = ({ value }: any) => {
+const getFileName = (str: string): string => str.substr(0, str.lastIndexOf('.')) || str;
+
+const FileItem = ({ value }: any) => {
   const [expanded, setExpanded] = useState(false);
-  let { fileName, verified, samples } = value;
+  const { fileName, verified, samples } = value;
   return (
     <ItemContainer>
       <StyledItemContainer onClick={() => setExpanded(!expanded)}>
         <FlexStart>
-          <Container.Icon
-            margin={".5em"}
-            size={"1.5em"}
-            children={verified ? <Check /> : <Cross />}
-          />
+          <Container.Icon margin=".5em" size="1.5em">
+            {verified ? <Check /> : <Cross />}
+          </Container.Icon>
           <Text>{getFileName(fileName)}</Text>
-          <Container.Icon
-            margin={".5em"}
-            size={"1.5em"}
-            color={'#b3b3b3'}
-            children={<AbletonIcon />}
-          />
+          <Container.Icon margin=".5em" size="1.5em" color="#b3b3b3">
+            <AbletonIcon />
+          </Container.Icon>
         </FlexStart>
         <Chevron expanded={expanded} setExpanded={setExpanded} />
       </StyledItemContainer>
-      {samples && <ExpandingDrawer expanded={expanded} info={value} />}
+      {samples && <Drawer expanded={expanded} info={value} />}
     </ItemContainer>
   );
 };
 
-const getFileName = (str: string): string => str.substr(0, str.lastIndexOf(".")) || str;
+export default FileItem;

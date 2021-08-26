@@ -1,18 +1,18 @@
-import { nanoid } from "@reduxjs/toolkit";
+import { nanoid } from '@reduxjs/toolkit';
 import {
   DeviceGroup,
   Device,
   Sample,
   Sampler,
   MainSequencer,
-} from "../types/AbletonProjectStructure.types";
+} from '../types/AbletonProjectStructure.types';
 
 import {
   nameExtractor,
   getDeviceChainName,
   giveNewKeys,
   fileExtractor,
-} from "./utility.functions";
+} from './utility.functions';
 
 /**
  * All of these functions are recursively extracting some part of the ableton project.
@@ -23,101 +23,35 @@ import {
  * TODO: Stronger types.  Recursive typing is hard.
  */
 
-export const deviceChainExtractor = (DeviceChain: any) => {
-  let { MainSequencer } = DeviceChain;
-  return {
-    ...(MainSequencer ? audioExtractor(MainSequencer) : {}),
-    ...deviceExtractor(
-      DeviceChain.DeviceChain ??
-        DeviceChain[getDeviceChainName(Object.keys(DeviceChain))]
-    ),
-  };
-};
-
-const deviceExtractor = ({ Devices }: { Devices: Device }): object => {
-  if (!Devices) return {};
-  const list: any = {};
-
-  for (let [key, value] of Object.entries(Devices)) {
-    if (key.includes("PluginDevice")) {
-      let info = pluginExtractor(value);
-      list["plugins"] = { ...list["plugins"], ...info };
-      continue;
-    }
-    if (
-      key.includes("InstrumentGroup") ||
-      key.includes("EffectGroup") ||
-      key.includes("DrumGroup")
-    ) {
-      let info = groupExtractor(value);
-      for (let [key, value] of Object.entries(info)) {
-        let { samples, plugins }: any = value;
-        list["samples"] = { ...list["samples"], ...samples };
-        list["plugins"] = { ...list["plugins"], ...plugins };
-      }
-      continue;
-    }
-    if (key.includes("MultiSampler") || key.includes("Simpler")) {
-      let info = samplerExtractor(value);
-      list["samples"] = { ...list["samples"], ...giveNewKeys(info) };
-      continue;
-    }
-  }
-  return list;
-};
-
-const samplerExtractor = ({
-  Player: {
-    MultiSampleMap: { SampleParts },
-  },
-}: Sampler) => {
-  // console.log(SampleParts)
-  let results = {};
-  for (let [key, value] of Object.entries(SampleParts)) {
-    let {
-      SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
-    }: Sample = value;
-    results = {
-      ...results,
-      [key]: { DefaultDuration, DefaultSampleRate, ...fileExtractor(FileRef) },
-    };
-  }
-  return results;
-};
-
-const groupExtractor = ({ Branches }: DeviceGroup) => {
-  // console.group('audioEffectBranches', Branches)
-  let results: any = {};
-  for (let [key, value] of Object.entries(Branches)) {
-    results[nameExtractor(value.Name ?? key)] = deviceChainExtractor(
-      value.DeviceChain
-    );
-  }
-  return results;
+const getType = (string: string) => {
+  // console.log({ string });
+  if (string.includes('Vst3')) return 'VST3';
+  if (string.includes('Au')) return 'AU';
+  return 'VST';
 };
 
 const pluginExtractor = ({ PluginDesc }: any): any => {
   const results: any = {};
-  for (let [key, value] of Object.entries(PluginDesc)) {
-    // console.log(value);
-    let { PlugName, Name, Preset, Manufacturer }: any = value;
+
+  Object.entries(PluginDesc).forEach(([, value]) => {
+    const {
+      PlugName, Name, Preset, Manufacturer,
+    }: any = value;
+    console.debug(Preset);
     results[nanoid()] = {
       Name: PlugName ?? Name,
-      type: Object.keys(Preset)[0].includes("Vst3")
-        ? "VST3"
-        : Object.keys(Preset)[0].includes("Au")
-        ? "AU"
-        : "VST",
+      type: getType(Object.keys(Preset)[0]),
       Manufacturer,
     };
-  }
+  });
+
   return results;
 };
 
 const clipSlotExtractor = ({ ClipSlot }: any): any => {
-  let samples: any = {};
+  const samples: any = {};
   if (!ClipSlot.Value) return {};
-  for (let [key, value] of Object.entries(ClipSlot.Value)) {
+  Object.entries(ClipSlot.Value).forEach(([, value]) => {
     const {
       SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
     }: any = value;
@@ -126,7 +60,7 @@ const clipSlotExtractor = ({ ClipSlot }: any): any => {
       DefaultSampleRate,
       ...fileExtractor(FileRef),
     };
-  }
+  });
   return samples;
 };
 
@@ -143,20 +77,97 @@ const sampleExtractor = (sample: any) => {
   };
 };
 
-const audioExtractor = (MainSequencer: MainSequencer): object => {
-  if (!MainSequencer.Sample) return {};
-  if (!MainSequencer.Sample.ArrangerAutomation.Events) return {};
+const audioExtractor = (MainSeq: MainSequencer): object => {
+  if (!MainSeq.Sample) return {};
+  if (!MainSeq.Sample.ArrangerAutomation.Events) return {};
   const list: any = {};
 
-  for (let [key, value] of Object.entries(MainSequencer.ClipSlotList)) {
-    list["samples"] = { ...list["samples"], ...clipSlotExtractor(value) };
-  }
+  Object.entries(MainSeq.ClipSlotList).forEach(([, value]) => {
+    list.samples = { ...list.samples, ...clipSlotExtractor(value) };
+  });
 
-  for (let [key, value] of Object.entries(
-    MainSequencer.Sample.ArrangerAutomation.Events
-  )) {
-    list["samples"] = { ...list["samples"], ...sampleExtractor(value) };
-  }
+  Object.entries(MainSeq.Sample.ArrangerAutomation.Events).forEach(
+    ([, value]) => {
+      list.samples = { ...list.samples, ...sampleExtractor(value) };
+    },
+  );
 
   return list;
 };
+
+const samplerExtractor = ({
+  Player: {
+    MultiSampleMap: { SampleParts },
+  },
+}: Sampler) => {
+  let results = {};
+  Object.entries(SampleParts).forEach(([key, value]) => {
+    const {
+      SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
+    }: Sample = value;
+    results = {
+      ...results,
+      [key]: { DefaultDuration, DefaultSampleRate, ...fileExtractor(FileRef) },
+    };
+  });
+  return results;
+};
+
+const groupExtractor = ({ Branches }: DeviceGroup) => {
+  // console.group('audioEffectBranches', Branches)
+  const results: any = {};
+  Object.entries(Branches).forEach(([key, value]) => {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    results[nameExtractor(value.Name ?? key)] = deviceChainExtractor(
+      value.DeviceChain,
+    );
+  });
+  return results;
+};
+
+const deviceExtractor = ({ Devices }: { Devices: Device }): object => {
+  if (!Devices) return {};
+  const list: any = {};
+
+  Object.entries(Devices).forEach(([key, value]) => {
+    if (key.includes('PluginDevice')) {
+      const info = pluginExtractor(value);
+      list.plugins = { ...list.plugins, ...info };
+      return;
+    }
+    if (
+      key.includes('InstrumentGroup')
+      || key.includes('EffectGroup')
+      || key.includes('DrumGroup')
+    ) {
+      const info = groupExtractor(value);
+      Object.entries(info).forEach(([, val]) => {
+        const { samples, plugins }: any = val;
+        list.samples = { ...list.samples, ...samples };
+        list.plugins = { ...list.plugins, ...plugins };
+      });
+
+      return;
+    }
+    if (key.includes('MultiSampler') || key.includes('Simpler')) {
+      const info = samplerExtractor(value);
+      list.samples = { ...list.samples, ...giveNewKeys(info) };
+    }
+  });
+
+  return list;
+};
+
+function deviceChainExtractor(DeviceChain: any) {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const { MainSequencer } = DeviceChain;
+  return {
+    ...(MainSequencer ? audioExtractor(MainSequencer) : {}),
+    ...deviceExtractor(
+      DeviceChain.DeviceChain
+        ?? DeviceChain[getDeviceChainName(Object.keys(DeviceChain))],
+    ),
+  };
+}
+
+export default deviceChainExtractor;

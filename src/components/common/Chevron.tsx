@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { ChevronDown, ChevronUp } from "svg";
-import {Container} from './index';
+import styled from 'styled-components';
+import { ChevronDown, ChevronUp } from 'svg';
+import * as React from 'react';
 
 const StyledChevron = styled.div`
   width: 1.5em;
@@ -13,10 +13,8 @@ const StyledChevron = styled.div`
   }
 `;
 
-export default ({ expanded, setExpanded }: any) => {
-  return (
-      <StyledChevron onClick={() => setExpanded(!expanded)}>
-        {expanded ? <ChevronUp /> : <ChevronDown />}
-      </StyledChevron>
-  );
-};
+export default ({ expanded, setExpanded }: any) => (
+  <StyledChevron onClick={() => setExpanded(!expanded)}>
+    {expanded ? <ChevronUp /> : <ChevronDown />}
+  </StyledChevron>
+);

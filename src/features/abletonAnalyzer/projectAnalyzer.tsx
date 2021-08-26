@@ -1,26 +1,24 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
-import { useDropzone } from "react-dropzone";
-import {
-  useAbletonAnalyzer,
-  buildDirectoryStructure,
-} from "hooks/useAbletonAnalyzer";
-import { useDispatch, useSelector } from "react-redux";
-import { reduceFiles } from "./analyzerSlice";
-import { FileItem } from "../FileItem";
-import { Container } from "components/common";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { useDropzone } from 'react-dropzone';
+import { useAbletonAnalyzer, buildDirectoryStructure } from 'hooks/useAbletonAnalyzer';
+import { useDispatch, useSelector } from 'react-redux';
+import { Container } from 'components/common';
+import { reduceFiles } from './analyzerSlice';
+import FileItem from '../FileItem';
 
 const getColor = (props: any) => {
   if (props.isDragAccept) {
-    return "#00e676";
+    return '#00e676';
   }
   if (props.isDragReject) {
-    return "#ff1744";
+    return '#ff1744';
   }
   if (props.isDragActive) {
-    return "#2196f3";
+    return '#2196f3';
   }
-  return "#3b3b3b";
+  return '#3b3b3b';
 };
 
 const Dropzone: any = styled.div`
@@ -37,36 +35,33 @@ const ScrollContainer = styled(Container)`
 `;
 
 const Analyzer = () => {
-  const [files, setFiles] = useState<Array<any>>([[{}, ""]]);
+  const [files, setFiles] = useState<Array<any>>([[{}, '']]);
   const [folderStructure, setFolderStructure] = useState({});
   const results = useAbletonAnalyzer(files, folderStructure);
   const endFiles = useSelector(({ fileStructure }: any) => fileStructure.files);
   const dispatch = useDispatch();
   const {
-    acceptedFiles,
-    fileRejections,
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
+    acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject,
   } = useDropzone({ disabled: Object.keys(endFiles).length > 0 });
 
   useEffect(() => {
-    if (Object.keys(folderStructure).length !== 0)
+    if (Object.keys(folderStructure).length !== 0) {
       setFiles(acceptedFiles.map((file: any) => [file, file.path]));
-  }, [folderStructure]);
+    }
+    console.debug('folderStructure', folderStructure);
+  }, [folderStructure, acceptedFiles]);
 
   useEffect(() => {
-    if (acceptedFiles.length !== 0)
-      setFolderStructure(buildDirectoryStructure(acceptedFiles));
+    console.debug('accFiles ==>', acceptedFiles);
+
+    if (acceptedFiles.length !== 0) setFolderStructure(buildDirectoryStructure(acceptedFiles));
   }, [acceptedFiles]);
 
   useEffect(() => {
+    console.debug({ results });
     dispatch(reduceFiles(results));
-    console.log(results)
-    console.log('folderStructure', folderStructure)
-  }, [results, folderStructure]);
+    // console.log("folderStructure", folderStructure);
+  }, [results, folderStructure, dispatch]);
 
   return (
     <>

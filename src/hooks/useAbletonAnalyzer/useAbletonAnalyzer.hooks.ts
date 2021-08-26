@@ -1,23 +1,21 @@
-import { wrap, releaseProxy } from "comlink";
-import { useEffect, useState, useMemo } from "react";
+import { wrap, releaseProxy } from 'comlink';
+import { useEffect, useState, useMemo } from 'react';
 
-export function useAbletonAnalyzer(
-  files: [File, string][],
-  fileStructure: object
-) {
-  const [data, setData] = useState({});
+function makeWorkerApiAndCleanup() {
+  const worker = new Worker('./useAbletonAnalyzer.worker', {
+    name: 'runBigTask',
+    type: 'module',
+  });
+  const workerApi = wrap<import('./useAbletonAnalyzer.worker').WorkerType>(worker);
 
-  const { workerApi } = useWorker();
+  const cleanup = () => {
+    workerApi[releaseProxy]();
+    worker.terminate();
+  };
 
-  useEffect(() => {
-    if (files[0][0] instanceof Blob !== true) return;
-    // console.log('passed')
-    workerApi
-      .fileStructureAnalyzer(files, fileStructure)
-      .then((results: object) => setData(results));
-  }, [workerApi, setData, files]);
+  const workerApiAndCleanup = { workerApi, cleanup };
 
-  return data;
+  return workerApiAndCleanup;
 }
 
 function useWorker() {
@@ -33,20 +31,26 @@ function useWorker() {
   return workerApiAndCleanup;
 }
 
-function makeWorkerApiAndCleanup() {
-  const worker = new Worker("./useAbletonAnalyzer.worker", {
-    name: "runBigTask",
-    type: "module",
-  });
-  const workerApi =
-    wrap<import("./useAbletonAnalyzer.worker").WorkerType>(worker);
+function useAbletonAnalyzer(
+  files: [File, string][],
+  fileStructure: object,
+) {
+  const [data, setData] = useState({});
 
-  const cleanup = () => {
-    workerApi[releaseProxy]();
-    worker.terminate();
-  };
+  const { workerApi } = useWorker();
 
-  const workerApiAndCleanup = { workerApi, cleanup };
+  useEffect(() => {
+    if (files[0][0] instanceof Blob !== true) return;
+    // console.log('passed')
+    workerApi
+      .fileStructureAnalyzer(files, fileStructure)
+      .then((results: object) => {
+        console.debug('workerResults', results);
+        setData(results);
+      });
+  }, [workerApi, setData, files, fileStructure]);
 
-  return workerApiAndCleanup;
+  return data;
 }
+
+export default useAbletonAnalyzer;

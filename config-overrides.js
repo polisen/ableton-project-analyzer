@@ -1,27 +1,24 @@
 const {
   override,
-  overrideDevServer,
-  addDecoratorsLegacy,
-  disableEsLint,
   addWebpackPlugin,
   addWebpackAlias,
-  addWebpackModuleRule,
-  watchAll,
+  enableEslintTypescript,
   // adjustWorkbox
-} = require("customize-cra");
-const path = require("path");
-const WorkerPlugin = require("worker-plugin");
+} = require('customize-cra');
+const path = require('path');
+const WorkerPlugin = require('worker-plugin');
 
 module.exports = override(
   (config) => ({
     ...config,
     output: {
       ...config.output,
-      globalObject: "this",
+      globalObject: 'this',
     },
   }),
+  // enableEslintTypescript(),
   addWebpackPlugin(new WorkerPlugin()),
   addWebpackAlias({
-    "@": path.resolve(__dirname, "./src/"),
-  })
+    '@': path.resolve(__dirname, './src/'),
+  }),
 );
