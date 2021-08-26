@@ -49,7 +49,8 @@
     },
     "rules": {
       "react/jsx-props-no-spreading": "off",
-      "no-console": ["error", { "allow": ["warn", "error", "debug"] }]
+      "no-console": ["error", { "allow": ["warn", "error", "debug"] }],
+      "react-hooks/exhaustive-deps": "off"
     },
     "overrides": [
       {
