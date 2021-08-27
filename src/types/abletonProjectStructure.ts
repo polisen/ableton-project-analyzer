@@ -2,19 +2,19 @@ export interface AbletonProject {
   Ableton: {
     LiveSet: {
       Tracks: {
-        [key: string]: AbletonTrack
+        [key: string]: AbletonTrack;
       };
       MasterTrack: AbletonTrack;
       TimeSelection: {
         AnchorTime: string;
-      }
+      };
     };
   };
 }
 
 export interface AbletonTrack {
   Name: TrackName;
-  DeviceChain: DeviceChain;
+  DeviceChain: DeviceChainType;
 }
 
 interface MidiClip {
@@ -23,7 +23,7 @@ interface MidiClip {
 
 export interface ReturnTrack {
   Name: TrackName;
-  DeviceChain: DeviceChain;
+  DeviceChain: DeviceChainType;
 }
 
 export interface TrackName {
@@ -31,20 +31,47 @@ export interface TrackName {
   MemorizedFirstClipName: string;
 }
 
-export interface DeviceChain {
+export interface DeviceChainType {
   MainSequencer?: MainSequencer;
-  DeviceChain?: {
-    Devices: Devices;
+
+  AudioToAudioDeviceChain?: {
+    Devices?: DevicesType;
   };
-  Devices?: Devices
+  MidiToAudioDeviceChain?: {
+    Devices?: DevicesType;
+  };
+  MidiToMidiDeviceChain?: {
+    Devices?: DevicesType;
+  };
+  DeviceChain?: {
+    Devices?: DevicesType;
+  };
+  Devices?: DevicesType;
 }
 
-export type Devices = {
+export type DevicesType = {
   [key: string]: Device;
 };
 
-export type Device = AbletonPlugin | DeviceGroup | PluginDevice;
-type AbletonPlugin = DeviceGroup | Sampler;
+// export type Device = Sampler | DeviceGroup | PluginDevice;
+
+export interface Device {
+  PluginDesc?: PluginDesc;
+  Branches?: {
+    [key: string]: Branch;
+  };
+  Player?: Player
+}
+
+export interface DeviceGroup {
+  Branches: {
+    [key: string]: Branch;
+  };
+}
+
+export interface Sampler {
+  Player: Player;
+}
 
 export interface MainSequencer {
   // clip view samples
@@ -68,23 +95,9 @@ export interface MainSequencer {
   };
 }
 
-export interface MidiMainSequencer {
-
-}
-
-export interface DeviceGroup {
-  Branches: {
-    [key: string]: Branch;
-  };
-}
-
 export interface Branch {
   Name: TrackName;
-  DeviceChain: DeviceChain;
-}
-
-export interface Sampler {
-  Player: Player;
+  DeviceChain: DeviceChainType;
 }
 
 interface Player {
@@ -97,16 +110,10 @@ interface Player {
 
 export interface Sample {
   SampleRef: {
-    DefaultDuration: number;
-    DefaultSampleRate: number;
+    DefaultDuration: string;
+    DefaultSampleRate: string;
     FileRef: FileRef;
   };
-}
-
-interface PluginDevice {
-  [key: string]: {
-    PluginDesc: PluginDesc;
-  }
 }
 
 export interface PluginDesc {
@@ -142,7 +149,6 @@ export interface FileRef {
 }
 
 interface AudioClip {
-
   Name: string;
   SampleRef: {
     // Duration in minutes base10 = DefaultDuration / DefaultSampleRate / 60

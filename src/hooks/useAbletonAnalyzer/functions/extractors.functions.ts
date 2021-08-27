@@ -1,12 +1,16 @@
 import { nanoid } from '@reduxjs/toolkit';
 import {
   DeviceGroup,
-  Device,
+  DevicesType,
   Sample,
+  DeviceChainType,
   Sampler,
   MainSequencer,
-} from '../types/AbletonProjectStructure.types';
+} from 'types/abletonProjectStructure';
 
+import {
+  SampleResult,
+} from 'types/analyzer';
 import {
   nameExtractor,
   getDeviceChainName,
@@ -64,10 +68,10 @@ const clipSlotExtractor = ({ ClipSlot }: any): any => {
   return samples;
 };
 
-const sampleExtractor = (sample: any) => {
+const sampleExtractor = (sample: Sample) => {
   const {
     SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
-  }: any = sample;
+  } = sample;
   return {
     [nanoid()]: {
       DefaultDuration,
@@ -77,10 +81,19 @@ const sampleExtractor = (sample: any) => {
   };
 };
 
+interface AudioExtractorResult {
+  samples: {
+    [key:string]: SampleResult;
+  }
+}
+
 const audioExtractor = (MainSeq: MainSequencer): object => {
   if (!MainSeq.Sample) return {};
   if (!MainSeq.Sample.ArrangerAutomation.Events) return {};
-  const list: any = {};
+  const list: AudioExtractorResult = {
+    samples: {},
+
+  };
 
   Object.entries(MainSeq.ClipSlotList).forEach(([, value]) => {
     list.samples = { ...list.samples, ...clipSlotExtractor(value) };
@@ -95,12 +108,16 @@ const audioExtractor = (MainSeq: MainSequencer): object => {
   return list;
 };
 
+interface SamplerExtractorResult {
+  [key: string]: SampleResult;
+}
+
 const samplerExtractor = ({
   Player: {
     MultiSampleMap: { SampleParts },
   },
 }: Sampler) => {
-  let results = {};
+  let results:SamplerExtractorResult = {};
   Object.entries(SampleParts).forEach(([key, value]) => {
     const {
       SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
@@ -125,11 +142,11 @@ const groupExtractor = ({ Branches }: DeviceGroup) => {
   return results;
 };
 
-const deviceExtractor = ({ Devices }: { Devices: Device }): object => {
+const deviceExtractor = ({ Devices }: { Devices: DevicesType }): object => {
   if (!Devices) return {};
   const list: any = {};
 
-  Object.entries(Devices).forEach(([key, value]) => {
+  Object.entries(Devices).forEach(([key, value]: [string, any]) => {
     if (key.includes('PluginDevice')) {
       const info = pluginExtractor(value);
       list.plugins = { ...list.plugins, ...info };
@@ -158,7 +175,7 @@ const deviceExtractor = ({ Devices }: { Devices: Device }): object => {
   return list;
 };
 
-function deviceChainExtractor(DeviceChain: any) {
+function deviceChainExtractor(DeviceChain: DeviceChainType | any) {
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const { MainSequencer } = DeviceChain;
   return {

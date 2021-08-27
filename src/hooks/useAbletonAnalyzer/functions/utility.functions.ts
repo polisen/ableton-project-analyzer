@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 import { nanoid } from '@reduxjs/toolkit';
-import { TrackName } from '../types/AbletonProjectStructure.types';
+import { TrackName } from '../../../types/abletonProjectStructure';
 
 export const stripDuplicateSamples = (obj: any) => {
   const arr: any = [];
@@ -34,10 +34,13 @@ export const buildDirectoryStructure = (arr: File[]) => {
   // console.log(arr)
   arr.forEach((file: any) => {
     const { path }: { path: string } = file;
-    path.split('/').filter((f) => f).reduce((r:any, e:any) => {
-      if (r[e]) return r[e];
-      return r[e] = {};
-    }, obj);
+    path
+      .split('/')
+      .filter((f) => f)
+      .reduce((r: any, e: any) => {
+        if (r[e]) return r[e];
+        return (r[e] = {});
+      }, obj);
   });
   console.debug(obj);
   return obj;
@@ -67,7 +70,20 @@ export const fileExtractor = ({
   RelativePath,
   FileName: Path.split('/').slice(-1)[0],
 });
-export const getDeviceChainName = (arr: string[]): string => (arr.length === 1 ? arr[0] : arr.filter((k) => k.includes('DeviceChain'))[0]);
+
+// type DeviceChainNameResult =
+//   | 'AudioToAudioDeviceChain'
+//   | 'MidiToAudioDeviceChain'
+//   | 'MainSequencer'
+//   | 'Devices'
+//   | 'MidiToMidiDeviceChain';
+
+export const getDeviceChainName = (
+  arr: string[],
+): any => {
+  if (arr.length !== 1) throw new Error('Too many devices in chain.');
+  return arr[0];
+};
 
 export const giveNewKeys = (obj: any) => {
   const newObj: any = {};

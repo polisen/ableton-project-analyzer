@@ -13,7 +13,7 @@ const StyledChevron = styled.div`
   }
 `;
 
-export default ({ expanded, setExpanded }: any) => (
+export default ({ expanded, setExpanded }: { expanded: boolean; setExpanded: Function }) => (
   <StyledChevron onClick={() => setExpanded(!expanded)}>
     {expanded ? <ChevronUp /> : <ChevronDown />}
   </StyledChevron>
