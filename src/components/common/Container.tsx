@@ -31,15 +31,15 @@ Container.Flex = styled(DefaultContainer)`
   align-items: center;
 `;
 
-Container.Icon = styled(DefaultContainer)`
+Container.Icon = styled(DefaultContainer)<ContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${({ size }: ContainerProps) => (size ?? '1em')};
-  height: ${({ size }: ContainerProps) => (size ?? '1em')};
-  margin: ${({ margin }: ContainerProps) => (margin ?? '1em')};
+  width: ${({ size }) => size ?? '1em'};
+  height: ${({ size }) => size ?? '1em'};
+  margin: ${({ margin }) => margin ?? '1em'};
   svg > path {
-    fill: ${({ color }: ContainerProps) => color ?? ''}
+    fill: ${({ color }) => color ?? ''};
   }
 `;
 

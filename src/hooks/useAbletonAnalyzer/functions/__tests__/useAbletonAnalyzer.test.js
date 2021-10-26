@@ -1,11 +1,11 @@
 import { findData } from '../useAbletonAnalyzer.functions';
 
-import { verifyExistence } from '../verifyExistence.functions';
+import verifyExistence from '../verifyExistence.functions';
 
-const basic = require('./basic_project.json');
-const fileStructure = require('./test_projects_filestructure.json');
-const maxxed = require('./maxxed_project.json');
-const nested = require('./nested_project.json');
+const basic = require('./project_files/basic_project.json');
+const fileStructure = require('./project_files/test_projects_filestructure.json');
+const maxxed = require('./project_files/maxxed_project.json');
+const nested = require('./project_files/nested_project.json');
 /**
  * These following tests an assortment of projects that represents different scenarios.
  * The ableton-project is tested from disk but
@@ -30,7 +30,6 @@ const nested = require('./nested_project.json');
  */
 
 test('test all projects and assert the results', async () => {
-
   const basicPath = '/test_projects/basic_project.als';
   const basicResult = findData(basic);
   const basicVerification = verifyExistence(
@@ -38,10 +37,11 @@ test('test all projects and assert the results', async () => {
     fileStructure,
     basicPath,
   );
+  console.debug(basicVerification);
   const basicVResults = [
     ...new Set(Object.entries(basicVerification).map(([, value]) => value)),
   ];
-
+  console.debug(basicVResults);
   expect(typeof basicResult).toBe('object');
   expect(basicVResults.length).toBe(1);
   expect(basicVResults[0]).toBe(true);
@@ -55,9 +55,7 @@ test('test all projects and assert the results', async () => {
   );
 
   const maxxedVResults = [
-    ...new Set(
-      Object.entries(maxxedVerification).map(([, value]) => value),
-    ),
+    ...new Set(Object.entries(maxxedVerification).map(([, value]) => value)),
   ];
 
   expect(typeof maxxedResults).toBe('object');
@@ -74,9 +72,7 @@ test('test all projects and assert the results', async () => {
     nestedPath,
   );
   const nestedVerificationResults = [
-    ...new Set(
-      Object.entries(nestedVerification).map(([, value]) => value),
-    ),
+    ...new Set(Object.entries(nestedVerification).map(([, value]) => value)),
   ];
 
   expect(typeof nestedResults).toBe('object');

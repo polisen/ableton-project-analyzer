@@ -64,12 +64,15 @@ export const fileExtractor = ({
   OriginalFileSize,
   Path,
   RelativePath,
-}: any) => ({
-  OriginalFileSize,
-  Path,
-  RelativePath,
-  FileName: Path.split('/').slice(-1)[0],
-});
+}: any) => {
+  console.debug(OriginalFileSize, Path, RelativePath);
+  return {
+    OriginalFileSize,
+    Path,
+    RelativePath,
+    FileName: Path.split('/').slice(-1)[0],
+  };
+};
 
 // type DeviceChainNameResult =
 //   | 'AudioToAudioDeviceChain'
@@ -78,9 +81,7 @@ export const fileExtractor = ({
 //   | 'Devices'
 //   | 'MidiToMidiDeviceChain';
 
-export const getDeviceChainName = (
-  arr: string[],
-): any => {
+export const getDeviceChainName = (arr: string[]): any => {
   if (arr.length !== 1) throw new Error('Too many devices in chain.');
   return arr[0];
 };

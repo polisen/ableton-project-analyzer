@@ -38,9 +38,9 @@ function useAbletonAnalyzer(
   const [data, setData] = useState({});
 
   const { workerApi } = useWorker();
-
+  console.debug(files);
   useEffect(() => {
-    if (files[0][0] instanceof Blob !== true) return;
+    if (files[0] && files[0].length !== 2 && files[0][0] instanceof Blob !== true) return;
     // console.log('passed')
     workerApi
       .fileStructureAnalyzer(files, fileStructure)

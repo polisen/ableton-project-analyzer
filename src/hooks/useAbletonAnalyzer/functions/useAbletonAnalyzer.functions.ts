@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { AbletonProject } from '../types/AbletonProjectStructure.types';
+import { AbletonProject } from '../../../types/abletonProjectStructure';
 
 import verifyExistence from './verifyExistence.functions';
 
@@ -61,12 +61,12 @@ export async function projectAnalyzer(file: File, path: string) {
     const XMLstring = pako.inflate(new Uint8Array(await file.arrayBuffer()), {
       to: 'string',
     });
-    console.debug({ XMLstring });
+    // console.debug({ XMLstring });
     const parsedXML = txml.parse(XMLstring);
-    console.debug({ parsedXML });
+    // console.debug({ parsedXML });
 
     const formatted = recursiveFormat('root', parsedXML);
-    console.debug({ formatted });
+    // console.debug({ formatted });
 
     return { data: findData(formatted), path, file };
   } catch (e) {
@@ -105,6 +105,7 @@ export const fileStructureAnalyzer = async (
   });
 
   const promRes = await Promise.all(promises);
+  console.debug({promRes});
   promRes.forEach(({ data, path, file }) => {
     const verifiedSamples = verifyExistence(
       data.samples,

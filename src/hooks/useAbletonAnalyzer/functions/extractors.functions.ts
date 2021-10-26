@@ -41,7 +41,7 @@ const pluginExtractor = ({ PluginDesc }: any): any => {
     const {
       PlugName, Name, Preset, Manufacturer,
     }: any = value;
-    console.debug(Preset);
+    // console.debug(Preset);
     results[nanoid()] = {
       Name: PlugName ?? Name,
       type: getType(Object.keys(Preset)[0]),
@@ -122,6 +122,7 @@ const samplerExtractor = ({
     const {
       SampleRef: { DefaultDuration, DefaultSampleRate, FileRef },
     }: Sample = value;
+    console.debug('samplerExtractor -->', { value });
     results = {
       ...results,
       [key]: { DefaultDuration, DefaultSampleRate, ...fileExtractor(FileRef) },

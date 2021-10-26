@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Ableton, Check, Cross } from 'svg';
 import { useState } from 'react';
 import { Chevron, Text, Container } from 'components/common';
+import { ProjectFileResult } from '../../types/analyzer';
 import Drawer from './ExpandingDrawer';
 
 const StyledItemContainer = styled(Container.Flex)`
@@ -36,7 +37,11 @@ const ItemContainer = styled.div`
 
 const getFileName = (str: string): string => str.substr(0, str.lastIndexOf('.')) || str;
 
-const FileItem = ({ value }: any) => {
+interface FileItemProps {
+  value: ProjectFileResult;
+}
+
+const FileItem = ({ value }: FileItemProps) => {
   const [expanded, setExpanded] = useState(false);
   const { fileName, verified, samples } = value;
   return (

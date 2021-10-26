@@ -1,4 +1,4 @@
-import { FileRef } from '../types/AbletonProjectStructure.types';
+import { FileRef } from '../../../types/abletonProjectStructure';
 
 const getPathFromOrigin = (relative: string, origin: string) => {
   try {
@@ -16,7 +16,6 @@ const getPathFromOrigin = (relative: string, origin: string) => {
     newArr = [...newHead, ...newArr];
     return newArr;
   } catch (error) {
-    // console.error(error);
     return [];
   }
 };
@@ -25,8 +24,11 @@ const findInStructure = (path: string[], structure: any) => {
   let bool = true;
   let currentStructure = structure;
   path.forEach((p) => {
-    if (currentStructure[p]) currentStructure = currentStructure[p];
-    bool = false;
+    if (currentStructure[p]) {
+      currentStructure = currentStructure[p];
+    } else {
+      bool = false;
+    }
   });
   return bool;
 };

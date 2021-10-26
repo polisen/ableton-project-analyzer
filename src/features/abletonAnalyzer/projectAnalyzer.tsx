@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone';
 import { useAbletonAnalyzer, buildDirectoryStructure } from 'hooks/useAbletonAnalyzer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Container } from 'components/common';
+import { Files } from 'types/analyzer';
 import { reduceFiles } from './analyzerSlice';
 import FileItem from '../FileItem';
 
@@ -21,7 +22,7 @@ const getColor = (props: any) => {
   return '#3b3b3b';
 };
 
-const Dropzone: any = styled.div`
+const Dropzone = styled.div<{ noClick: boolean }>`
   height: 95%;
   width: 95%;
   background-color: #121212;
@@ -35,11 +36,12 @@ const ScrollContainer = styled(Container)`
 `;
 
 const Analyzer = () => {
-  const [files, setFiles] = useState<Array<any>>([[{}, '']]);
+  const dispatch = useAppDispatch();
+  const [files, setFiles] = useState<Array<[File, string]>>([]);
   const [folderStructure, setFolderStructure] = useState({});
   const results = useAbletonAnalyzer(files, folderStructure);
-  const endFiles = useSelector(({ fileStructure }: any) => fileStructure.files);
-  const dispatch = useDispatch();
+  const endFiles: Files = useAppSelector(({ fileStructure }) => fileStructure.files);
+
   const {
     acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject,
   } = useDropzone({ disabled: Object.keys(endFiles).length > 0 });
@@ -60,8 +62,11 @@ const Analyzer = () => {
   useEffect(() => {
     console.debug({ results });
     dispatch(reduceFiles(results));
-    // console.log("folderStructure", folderStructure);
   }, [results, folderStructure, dispatch]);
+
+  useEffect(() => {
+    console.debug(endFiles);
+  }, [endFiles]);
 
   return (
     <>

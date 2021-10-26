@@ -10,8 +10,6 @@ Currently, the main way to share audio project files between collaborators is by
 This method is cumbersome and does not answer questions about compatibility.
 
 
-
-
 When it comes to many music creation softwares, such as Ableton, I've found, those question are mostly dependent on two main factors.
  - Do both parties have the same plugins?
  - Are all the required files present in the packet?
@@ -38,15 +36,13 @@ These questions are what I've set out to answer by creating this interface.
   - Red cross on project means that not all the audio samples referenced in the project were found within the files provided.
 
 ### Short Term Todo
-- [ ] Stronger Types
+- [x] Stronger Types
 - [ ] More unit testing
 - [ ] Integration Testing
 - [ ] Basic E2E Testing
 - [ ] UI Overhaul
   - [ ] Lottie animation on hover
   - [ ] Better presentation
-- [ ] Adding more test projects
-- [ ] One-Click demo 
 - [ ] Functionality
   - [ ] Project Version
   - [ ] Tempo

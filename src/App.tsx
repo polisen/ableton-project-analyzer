@@ -6,7 +6,11 @@ import Analyzer from './features/abletonAnalyzer/projectAnalyzer';
 
 const Background = styled(Container.Flex)`
   height: 100vh;
+  width: 100vw;
   background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function App() {

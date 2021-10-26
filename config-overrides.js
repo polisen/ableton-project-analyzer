@@ -2,7 +2,6 @@ const {
   override,
   addWebpackPlugin,
   addWebpackAlias,
-  enableEslintTypescript,
   // adjustWorkbox
 } = require('customize-cra');
 const path = require('path');
