@@ -6,8 +6,11 @@ const SamplesContainer = styled.div`
   width: 100%;
   height: 15em;
   justify-content: center;
-  background-color: aliceblue;
+  background-color: ${({ theme }) => theme.background.fraction};
+  margin-bottom: 6px;
+  border-radius: 16px;
   align-items: center;
+  color: white;
 `;
 
 export default function Samples() {

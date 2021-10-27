@@ -4,6 +4,8 @@ import { ReactComponent as Cross } from './Cross.svg';
 import { ReactComponent as QuestionMark } from './Question.svg';
 import { ReactComponent as ChevronUp } from './ChevronUp.svg';
 import { ReactComponent as ChevronDown } from './ChevronDown.svg';
+import { ReactComponent as AbletonFolder } from './AbletonFolder.svg';
+import { ReactComponent as AbletonFile } from './AbletonFile.svg';
 
 export {
   Ableton,
@@ -12,4 +14,6 @@ export {
   ChevronUp,
   ChevronDown,
   QuestionMark,
+  AbletonFile,
+  AbletonFolder,
 };

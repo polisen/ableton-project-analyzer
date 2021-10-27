@@ -1,30 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AbletonFolder } from 'assets/svg';
-// import { Button } from 'components/common';
-import Plugins from './Plugins';
-import Samples from './Samples';
+import { Button } from 'components/common';
+import ProjectFiles from './ProjectFiles';
 
-const DetailsContainer = styled.div`
+const Container = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.background.fraction};
-  grid-area: "details";
   display: flex;
   flex-direction: column;
-  border-radius: 16px;
-  
 `;
 
 const HeaderContainer = styled.div`
-  height: 4em;
+  height: 5em;
   width: 100%;
   background-color: ${({ theme }) => theme.background.fraction};
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 16px;
-  margin-bottom: 5px;
+  :hover {
+  background-color: ${({ theme }) => theme.background.ffraction};
+
+  }
 `;
 
 const FolderIcon = styled(AbletonFolder)`
@@ -35,7 +32,12 @@ const FolderIcon = styled(AbletonFolder)`
 const ProjectName = styled.div`
   padding: 10px;
   color: white;
-  font-size: 1rem;
+  font-size: 36px;
+`;
+
+const Chevron = styled(Button)`
+  height: 100%;
+  margin-right: 10px;
 `;
 
 const Group = styled.div`
@@ -46,21 +48,26 @@ const Group = styled.div`
   width: 100%;
 `;
 
-const DetailsHeader = ({ text }: { text: string }) => (
+const ButtonContainer = styled(Group)`
+  width: 5em;
+`;
+const ProjectHeader = ({ text }: { text: string }) => (
   <HeaderContainer>
     <Group>
       <FolderIcon />
       <ProjectName>{text}</ProjectName>
     </Group>
+    <ButtonContainer>
+      <Chevron onClick={() => {}}>arrow</Chevron>
+    </ButtonContainer>
   </HeaderContainer>
 );
 
-export default function Details() {
+export default function BrowserContent() {
   return (
-    <DetailsContainer>
-      <DetailsHeader text="Project Name" />
-      <Samples />
-      <Plugins />
-    </DetailsContainer>
+    <Container>
+      <ProjectHeader text="Project Name" />
+      <ProjectFiles />
+    </Container>
   );
 }

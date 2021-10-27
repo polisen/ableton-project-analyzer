@@ -6,7 +6,9 @@ const PluginContainer = styled.div`
   width: 100%;
   height: 15em;
   justify-content: center;
-  background-color: aliceblue;
+  background-color: ${({ theme }) => theme.background.fraction};
+  border-radius: 16px;
+  color: white;
   align-items: center;
 `;
 

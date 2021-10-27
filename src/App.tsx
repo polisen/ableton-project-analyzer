@@ -2,6 +2,7 @@ import './App.css';
 import styled from 'styled-components';
 import { Container } from 'components/common';
 import React from 'react';
+import ThemeProvider from 'features/ThemeProvider';
 import Analyzer from './features/Analyzer';
 
 const Background = styled(Container.Flex)`
@@ -15,9 +16,11 @@ const Background = styled(Container.Flex)`
 
 function App() {
   return (
-    <Background>
-      <Analyzer />
-    </Background>
+    <ThemeProvider>
+      <Background>
+        <Analyzer />
+      </Background>
+    </ThemeProvider>
   );
 }
 
