@@ -2,7 +2,7 @@ import './App.css';
 import styled from 'styled-components';
 import { Container } from 'components/common';
 import React from 'react';
-import Analyzer from './features/abletonAnalyzer/projectAnalyzer';
+import Analyzer from './features/Analyzer';
 
 const Background = styled(Container.Flex)`
   height: 100vh;

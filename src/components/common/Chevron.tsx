@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ChevronDown, ChevronUp } from 'svg';
+import { ChevronDown, ChevronUp } from 'assets/svg';
 import * as React from 'react';
 
 const StyledChevron = styled.div`

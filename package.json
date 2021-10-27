@@ -25,6 +25,7 @@
     "react-dropzone": "^11.3.4",
     "react-hooks-worker": "^1.0.0",
     "react-redux": "^7.2.4",
+    "react-responsive": "^9.0.0-beta.4",
     "react-scripts": "4.0.3",
     "react-spring": "^9.2.4",
     "styled-components": "^5.3.1",

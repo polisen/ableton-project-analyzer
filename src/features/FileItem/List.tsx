@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Check, QuestionMark } from 'svg';
+import { Check, QuestionMark } from 'assets/svg';
 import { Text, Container } from 'components/common';
 import * as React from 'react';
 

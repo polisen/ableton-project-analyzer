@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Ableton, Check, Cross } from 'svg';
+import { Ableton, Check, Cross } from 'assets/svg';
 import { useState } from 'react';
 import { Chevron, Text, Container } from 'components/common';
 import { ProjectFileResult } from '../../types/analyzer';
