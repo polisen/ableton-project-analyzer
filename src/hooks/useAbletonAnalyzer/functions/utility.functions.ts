@@ -28,22 +28,32 @@ export const stripDuplicatePlugins = (obj: any) => {
   return object;
 };
 
-export const buildDirectoryStructure = (arr: File[]) => {
+const buildStructure = (paths: string[]) => {
   const obj: any = {};
-  if (arr.length <= 0) return {};
-  // console.log(arr)
-  arr.forEach((file: any) => {
-    const { path }: { path: string } = file;
-    path
-      .split('/')
-      .filter((f) => f)
-      .reduce((r: any, e: any) => {
-        if (r[e]) return r[e];
-        return (r[e] = {});
-      }, obj);
-  });
-  console.debug(obj);
+
+  paths.forEach((p: string) => p
+    .split('/')
+    .filter((f) => f)
+    .reduce((r, e) => {
+      if (r[e]) return r[e];
+      return (r[e] = {});
+    }, obj));
+
   return obj;
+};
+
+export const getZippedFileStructure = (zipped: any) => {
+  const { files } = zipped;
+  const paths = Object.keys(files).filter((f) => !f.includes('__MACOSX'));
+
+  return buildStructure(paths);
+};
+
+export const getFileStructure = (arr: File[]) => {
+  if (arr.length <= 0) return {};
+  const paths = arr.map((file: any) => file.path);
+
+  return buildStructure(paths);
 };
 
 /**

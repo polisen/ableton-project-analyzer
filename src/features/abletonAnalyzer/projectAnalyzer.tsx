@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone';
-import { useAbletonAnalyzer, buildDirectoryStructure } from 'hooks/useAbletonAnalyzer';
+import { useAbletonAnalyzer, getFileStructure } from 'hooks/useAbletonAnalyzer';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Container } from 'components/common';
 import { Files } from 'types/analyzer';
@@ -47,16 +47,16 @@ const Analyzer = () => {
   } = useDropzone({ disabled: Object.keys(endFiles).length > 0 });
 
   useEffect(() => {
+    console.debug('folderStructure', folderStructure);
     if (Object.keys(folderStructure).length !== 0) {
       setFiles(acceptedFiles.map((file: any) => [file, file.path]));
     }
-    console.debug('folderStructure', folderStructure);
   }, [folderStructure, acceptedFiles]);
 
   useEffect(() => {
     console.debug('accFiles ==>', acceptedFiles);
 
-    if (acceptedFiles.length !== 0) setFolderStructure(buildDirectoryStructure(acceptedFiles));
+    if (acceptedFiles.length !== 0) setFolderStructure(getFileStructure(acceptedFiles));
   }, [acceptedFiles]);
 
   useEffect(() => {

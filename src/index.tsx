@@ -2,15 +2,20 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {
+  ReactReduxFirebaseProvider,
+} from 'react-redux-firebase';
+import { store, rrfProps } from 'app/store';
 import App from './App';
-import { store } from './app/store';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ReactReduxFirebaseProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

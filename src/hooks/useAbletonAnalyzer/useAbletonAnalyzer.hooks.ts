@@ -45,7 +45,6 @@ function useAbletonAnalyzer(
     workerApi
       .fileStructureAnalyzer(files, fileStructure)
       .then((results: object) => {
-        console.debug('workerResults', results);
         setData(results);
       });
   }, [workerApi, setData, files, fileStructure]);
