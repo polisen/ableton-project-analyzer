@@ -5,6 +5,8 @@ import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
 const initialState: any = {
   files: {},
   fileStructure: {},
+  result: {},
+  selected: '',
 };
 
 export const fileStructureAnalyzer = createSlice({
@@ -13,7 +15,6 @@ export const fileStructureAnalyzer = createSlice({
   reducers: {
     reduceFiles: (state, action: PayloadAction<object>) => {
       const obj: any = {};
-      console.debug({ payload: action.payload });
       Object.entries(action.payload).map(([key, value]: any) => {
         const samples: any = {};
         let projectVerified = true;
@@ -39,17 +40,27 @@ export const fileStructureAnalyzer = createSlice({
       }, {});
     },
     setFileStructure: (state, action: PayloadAction<Object>) => {
-      console.debug('action.payload', action.payload);
       state.fileStructure = action.payload;
     },
     setFiles: (state, action: PayloadAction<Object>) => {
       state.files = action.payload;
     },
+    setAnalyzerResults: (state, action: PayloadAction<Object>) => {
+      state.result = action.payload;
+    },
+    setSelected: (state, action: PayloadAction<string>) => {
+      state.selected = action.payload;
+    },
   },
 });
 
 export const {
-  reduceFiles, setAcceptedFiles, setFileStructure, setFiles,
+  reduceFiles,
+  setAcceptedFiles,
+  setFileStructure,
+  setFiles,
+  setAnalyzerResults,
+  setSelected,
 } = fileStructureAnalyzer.actions;
 
 export default fileStructureAnalyzer.reducer;

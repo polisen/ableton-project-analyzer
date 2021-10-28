@@ -96,8 +96,6 @@ export const fileStructureAnalyzer = async (
   const results: { [key: string]: object } = {};
   const promises: any[] = [];
 
-  console.debug({ files, fileStructure });
-
   files.forEach(([file, path]) => {
     if (file instanceof Blob !== true) return;
     if (path.includes('Backup')) return;
@@ -107,7 +105,8 @@ export const fileStructureAnalyzer = async (
   });
 
   const promRes = await Promise.all(promises);
-  // console.debug({promRes});
+  console.debug({ promRes });
+
   promRes.forEach(({ data, path, file }) => {
     const verifiedSamples = verifyExistence(
       data.samples,

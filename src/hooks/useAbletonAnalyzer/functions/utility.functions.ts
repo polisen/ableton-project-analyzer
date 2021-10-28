@@ -28,7 +28,7 @@ export const stripDuplicatePlugins = (obj: any) => {
   return object;
 };
 
-const buildStructure = (paths: string[]) => {
+export const buildStructure = (paths: string[]) => {
   const obj: any = {};
 
   paths.forEach((p: string) => p
@@ -40,13 +40,6 @@ const buildStructure = (paths: string[]) => {
     }, obj));
 
   return obj;
-};
-
-export const getZippedFileStructure = (zipped: any) => {
-  const { files } = zipped;
-  const paths = Object.keys(files).filter((f) => !f.includes('__MACOSX'));
-
-  return buildStructure(paths);
 };
 
 export const getFileStructure = (arr: File[]) => {
@@ -74,15 +67,12 @@ export const fileExtractor = ({
   OriginalFileSize,
   Path,
   RelativePath,
-}: any) => {
-  console.debug(OriginalFileSize, Path, RelativePath);
-  return {
-    OriginalFileSize,
-    Path,
-    RelativePath,
-    FileName: Path.split('/').slice(-1)[0],
-  };
-};
+}: any) => ({
+  OriginalFileSize,
+  Path,
+  RelativePath,
+  FileName: Path.split('/').slice(-1)[0],
+});
 
 // type DeviceChainNameResult =
 //   | 'AudioToAudioDeviceChain'

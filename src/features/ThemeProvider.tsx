@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 const theme = {
   background: {
     main: '#121212',
-    highlight: '#262626',
+    highlight: '#191919',
     fraction: 'rgba(255,255,255,.08)',
     ffraction: 'rgba(255,255,255,.20)',
   },

@@ -6,8 +6,7 @@ import AppHeader from './Header';
 const BrowserContainer = styled.div`
   width: 100%;
   height: 100%;
-background-color: ${({ theme }) => theme.background.fraction};
-
+  background-color: ${({ theme }) => theme.background.fraction};
   display: flex;
   flex-direction: column;
   border-radius: 16px;

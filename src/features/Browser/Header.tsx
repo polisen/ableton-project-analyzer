@@ -1,31 +1,29 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Ableton } from 'assets/svg';
-import { Button } from 'components/common';
+import { Text } from 'components/common';
 
 const HeaderContainer = styled.div`
   width: 100%;
   height: 5em;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
   background-color: ${({ theme }) => theme.background.main};
+  p {
+    font-size: 24px;
+    margin-left: 8px;
+  }
 `;
 
 const AbletonIcon = styled(Ableton)`
-padding-left: 1em;
+  padding-left: 1em;
 `;
 
-const DemoButton = styled.div`
-padding-right: 1em;
-
-`;
 const AppHeader = () => (
   <HeaderContainer>
     <AbletonIcon />
-    <DemoButton>
-      <Button onClick={() => {}}>Demo Project</Button>
-    </DemoButton>
+    <Text>Ableton Project Analyzer v.1.0.2</Text>
   </HeaderContainer>
 );
 

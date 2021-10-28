@@ -9,7 +9,7 @@ type TextProps = {
 };
 
 const DefaultText = styled.p<TextProps>`
-  font-family: montserrat;
+  font-family: 'Roboto Mono';
   font-weight: bold;
   color: white;
   margin: 5px;

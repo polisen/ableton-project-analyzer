@@ -1,9 +1,11 @@
 import { wrap, releaseProxy } from 'comlink';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { setAnalyzerResults } from 'slices/analyzerSlice';
 
 function makeWorkerApiAndCleanup() {
   const worker = new Worker('./useAbletonAnalyzer.worker', {
-    name: 'runBigTask',
+    name: 'abletonAnalyzer',
     type: 'module',
   });
   const workerApi = wrap<import('./useAbletonAnalyzer.worker').WorkerType>(worker);
@@ -31,25 +33,24 @@ function useWorker() {
   return workerApiAndCleanup;
 }
 
-function useAbletonAnalyzer(
-  files: [File, string][],
-  fileStructure: object,
-) {
-  const [data, setData] = useState({});
+function useAbletonAnalyzer(files: [File, string][]) {
+  const dispatch = useAppDispatch();
+  const { fileStructure } = useAppSelector((state: any) => state.fileStructure);
 
   const { workerApi } = useWorker();
-  console.debug(files);
+  // console.debug(files);
   useEffect(() => {
     if (files[0] && files[0].length !== 2 && files[0][0] instanceof Blob !== true) return;
-    // console.log('passed')
+
+    if (Object.keys(fileStructure).length < 0) return;
     workerApi
       .fileStructureAnalyzer(files, fileStructure)
       .then((results: object) => {
-        setData(results);
+        dispatch(setAnalyzerResults(results));
+      }).catch((err) => {
+        console.error(err);
       });
-  }, [workerApi, setData, files, fileStructure]);
-
-  return data;
+  }, [files, fileStructure]);
 }
 
 export default useAbletonAnalyzer;
