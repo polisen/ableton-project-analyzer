@@ -45,6 +45,8 @@ const Table = styled.table`
 const Container = styled.div`
   background-color: ${({ theme }) => theme.background.fraction};
   width: 100%;
+  height: 100%;
+
   overflow: scroll;
 `;
 const HHMMSS = (sec_num: number) => {

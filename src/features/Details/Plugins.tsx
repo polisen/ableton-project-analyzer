@@ -8,7 +8,6 @@ const Table = styled.table`
   align-items: center;
   cursor: pointer;
   width: 100%;
-  height: 100%;
   border-collapse: collapse;
   border: none;
   th {
