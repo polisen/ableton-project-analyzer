@@ -10,7 +10,6 @@ const BigLayout = styled.div`
   grid-template-rows: 1fr;
   grid-gap: 10px;
   grid-template-areas: "browser details";
-
 `;
 
 const MobileLayout = styled.div`

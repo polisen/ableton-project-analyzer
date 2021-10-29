@@ -5,10 +5,10 @@ import styled from 'styled-components';
 const Table = styled.table`
   flex-direction: column;
   color: rgba(255, 255, 255, 0.8);
-
   align-items: center;
   cursor: pointer;
   width: 100%;
+  height: 100%;
   border-collapse: collapse;
   border: none;
   th {

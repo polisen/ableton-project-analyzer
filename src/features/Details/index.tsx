@@ -3,17 +3,19 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { AbletonFolder } from 'assets/svg';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import Plugins from './Plugins';
 import Samples from './Samples';
 
-const DetailsContainer = styled.div`
+const DetailsContainer = styled.div<{ isBig: boolean }>`
   width: 100%;
   height: 100%;
-  height: 700px;
+  ${({ isBig }) => (isBig ? 'height: 700px' : 'max-height: 400px')}
   background-color: ${({ theme }) => theme.background.fraction};
   grid-area: "details";
   display: flex;
   flex-direction: column;
+  overflow: scroll;
   border-radius: 16px;
   div {
     /* border-radius: 8px; */
@@ -71,13 +73,15 @@ export default function Details() {
     },
     setProject,
   ]: [any, any] = useState({});
-
+  const isBig = useMediaQuery({
+    query: '(min-device-width: 720px)',
+  });
   useEffect(() => {
     setProject(selected.length > 0 && results[selected] && results[selected]);
   }, [results, selected]);
 
   return (
-    <DetailsContainer>
+    <DetailsContainer isBig={isBig}>
       <DetailsHeader text={fileName} />
       <Samples {...{ samples, verifiedSamples }} />
       <Plugins {...{ plugins }} />
