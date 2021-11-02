@@ -105,7 +105,6 @@ export const fileStructureAnalyzer = async (
   });
 
   const promRes = await Promise.all(promises);
-  console.debug({ promRes });
 
   promRes.forEach(({ data, path, file }) => {
     const verifiedSamples = verifyExistence(

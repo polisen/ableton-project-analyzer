@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone';
 import { buildStructure, useAbletonAnalyzer } from 'hooks/useAbletonAnalyzer';
 import { useAppDispatch } from 'app/hooks';
-import { Button, Text, Spinner } from 'components/common';
+import {
+  Button, Text, Spinner, Suspense,
+} from 'components/common';
 import { setFileStructure } from 'slices/analyzerSlice';
 import unZip from 'workers/unZip';
 import { useFirebase } from 'react-redux-firebase';
@@ -105,18 +107,19 @@ const DropZone = () => {
         noClick={true}
       >
         <input {...getInputProps()} />
-        {loading.status ? (
-          <>
-            <Spinner />
-            <Text>{loading.message}</Text>
-          </>
-        ) : (
-          <>
-            <Text>Drag n Drop Ableton Project Folder</Text>
-            <Text> - or click -</Text>
-            <DemoButton setFiles={setFiles} setLoading={setLoading} />
-          </>
+        <Suspense
+          loading={loading.status}
+          placeholder={(
+            <>
+              <Spinner />
+              <Text>{loading.message}</Text>
+            </>
         )}
+        >
+          <Text>Drag n Drop Ableton Project Folder</Text>
+          <Text> - or click -</Text>
+          <DemoButton setFiles={setFiles} setLoading={setLoading} />
+        </Suspense>
       </Dropzone>
     </>
   );

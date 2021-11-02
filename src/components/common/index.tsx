@@ -4,6 +4,7 @@ import Divider from './Divider';
 import Container from './Container';
 import Button from './Button';
 import Spinner from './Spinner';
+import Suspense from './Suspense';
 
 export {
   Chevron,
@@ -12,4 +13,5 @@ export {
   Container,
   Button,
   Spinner,
+  Suspense,
 };

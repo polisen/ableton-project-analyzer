@@ -3,7 +3,7 @@ import * as React from 'react';
 
 type TextProps = {
   children?: React.ReactNode;
-  wrap?: boolean;
+  wrap?: string;
   inset?: boolean;
   fontSize?: number;
 };
@@ -13,8 +13,8 @@ const DefaultText = styled.p<TextProps>`
   font-weight: bold;
   color: white;
   margin: 5px;
-  word-wrap: ${({ wrap }) => (wrap ? 'break-word' : 'normal')};
-  word-break: ${({ wrap }) => (wrap ? 'break-all' : 'normal')};
+  word-wrap: ${({ wrap }) => (wrap === 'false' ? 'break-word' : 'normal')};
+  word-break: ${({ wrap }) => (wrap === 'false' ? 'break-all' : 'normal')};
   padding-left: 5px;
   margin-left: ${({ inset }) => (inset ? '.5em' : '0')};
   font-size: ${({ fontSize }) => `${fontSize}px`};
@@ -28,7 +28,7 @@ const Text = ({
 
 Text.defaultProps = {
   children: null,
-  wrap: false,
+  wrap: 'false',
   inset: false,
   fontSize: 12,
 };
