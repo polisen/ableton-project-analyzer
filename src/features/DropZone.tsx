@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone';
 import { buildStructure, useAbletonAnalyzer } from 'hooks/useAbletonAnalyzer';
 import { useAppDispatch } from 'app/hooks';
-import { Button, Text } from 'components/common';
+import { Button, Text, Spinner } from 'components/common';
 import { setFileStructure } from 'slices/analyzerSlice';
-
 import unZip from 'workers/unZip';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
@@ -26,7 +25,7 @@ const DemoContainer = styled.div`
   padding-right: 1em;
 `;
 
-const DemoButton = ({ setFiles }: any) => {
+const DemoButton = ({ setFiles, setLoading }: any) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -35,7 +34,7 @@ const DemoButton = ({ setFiles }: any) => {
       .storage()
       .ref('test_project.zip')
       .getDownloadURL()
-      .then((url) => {
+      .then((url: string) => {
         // console.debug({ url });
         const xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
@@ -43,6 +42,13 @@ const DemoButton = ({ setFiles }: any) => {
           const results = await unZip(URL.createObjectURL(xhr.response));
           setFiles(results);
           dispatch(setFileStructure(buildStructure(results.map(([, p]) => p))));
+          setLoading({ status: false, message: 'Finished' });
+        };
+        xhr.onloadstart = () => {
+          setLoading({ status: true, message: 'Downloading' });
+        };
+        xhr.onloadend = () => {
+          setLoading({ status: true, message: 'Unpacking' });
         };
         xhr.open('GET', url);
         xhr.send();
@@ -54,7 +60,14 @@ const DemoButton = ({ setFiles }: any) => {
 
   return (
     <DemoContainer>
-      <Button onClick={(e: any) => { e.stopPropagation(); handleDownload(); }}>Demo Project</Button>
+      <Button
+        onClick={(e: any) => {
+          e.stopPropagation();
+          handleDownload();
+        }}
+      >
+        Demo Project
+      </Button>
     </DemoContainer>
   );
 };
@@ -62,6 +75,7 @@ const DemoButton = ({ setFiles }: any) => {
 const DropZone = () => {
   const dispatch = useAppDispatch();
   const [files, setFiles] = useState<Array<[File, string]>>([]);
+  const [loading, setLoading] = useState({ status: false, message: '' });
   useAbletonAnalyzer(files);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -83,15 +97,26 @@ const DropZone = () => {
     <>
       <Dropzone
         {...getRootProps({
-          isDragActive, isDragAccept, isDragReject,
+          isDragActive,
+          isDragAccept,
+          isDragReject,
         })}
         // eslint-disable-next-line react/jsx-boolean-value
         noClick={true}
       >
         <input {...getInputProps()} />
-        <Text>Drag n Drop Ableton Project Folder</Text>
-        <Text> - or click -</Text>
-        <DemoButton setFiles={setFiles} />
+        {loading.status ? (
+          <>
+            <Spinner />
+            <Text>{loading.message}</Text>
+          </>
+        ) : (
+          <>
+            <Text>Drag n Drop Ableton Project Folder</Text>
+            <Text> - or click -</Text>
+            <DemoButton setFiles={setFiles} setLoading={setLoading} />
+          </>
+        )}
       </Dropzone>
     </>
   );

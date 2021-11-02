@@ -1,40 +1,42 @@
-[debug] [2021-10-28T23:55:57.738Z] ----------------------------------------------------------------------
-[debug] [2021-10-28T23:55:57.740Z] Command:       /Users/fredrik/.nvm/versions/node/v14.17.6/bin/node /usr/local/bin/firebase emulators:start --import emulatorData --export-on-exit
-[debug] [2021-10-28T23:55:57.740Z] CLI Version:   9.16.0
-[debug] [2021-10-28T23:55:57.740Z] Platform:      darwin
-[debug] [2021-10-28T23:55:57.740Z] Node Version:  v14.17.6
-[debug] [2021-10-28T23:55:57.744Z] Time:          Fri Oct 29 2021 01:55:57 GMT+0200 (Central European Summer Time)
-[debug] [2021-10-28T23:55:57.744Z] ----------------------------------------------------------------------
+[debug] [2021-11-02T10:02:40.822Z] ----------------------------------------------------------------------
+[debug] [2021-11-02T10:02:40.824Z] Command:       /Users/fredrik/.nvm/versions/node/v14.17.6/bin/node /usr/local/bin/firebase emulators:start --import emulatorData --export-on-exit
+[debug] [2021-11-02T10:02:40.825Z] CLI Version:   9.16.0
+[debug] [2021-11-02T10:02:40.825Z] Platform:      darwin
+[debug] [2021-11-02T10:02:40.825Z] Node Version:  v14.17.6
+[debug] [2021-11-02T10:02:40.831Z] Time:          Tue Nov 02 2021 11:02:40 GMT+0100 (Central European Standard Time)
+[debug] [2021-11-02T10:02:40.831Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2021-10-28T23:55:57.809Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2021-10-28T23:55:57.810Z] > authorizing via signed-in user (fredrik@megatech.ltd)
+[debug] [2021-11-02T10:02:40.849Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2021-11-02T10:02:40.935Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-11-02T10:02:40.936Z] > authorizing via signed-in user (fredrik@megatech.ltd)
 [info] i  emulators: Starting emulators: hosting, storage {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: hosting, storage"}}
-[debug] [2021-10-28T23:55:57.838Z] [hub] writing locator at /var/folders/wd/vkk3t3_551s17d64phds_khh0000gn/T/hub-ableton-project-analyzer.json
-[debug] [2021-10-28T23:55:57.860Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
-[debug] [2021-10-28T23:55:58.382Z] Temp file directory for storage emulator: /var/folders/wd/vkk3t3_551s17d64phds_khh0000gn/T/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: /var/folders/wd/vkk3t3_551s17d64phds_khh0000gn/T/firebase/storage/blobs"}}
-[debug] [2021-10-28T23:56:20.810Z] > refreshing access token with scopes: []
-[debug] [2021-10-28T23:56:20.817Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+[debug] [2021-11-02T10:02:40.961Z] [hub] writing locator at /var/folders/wd/vkk3t3_551s17d64phds_khh0000gn/T/hub-ableton-project-analyzer.json
+[debug] [2021-11-02T10:02:41.003Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2021-11-02T10:02:41.475Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2021-11-02T10:02:41.476Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2021-11-02T10:02:42.566Z] Temp file directory for storage emulator: /var/folders/wd/vkk3t3_551s17d64phds_khh0000gn/T/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: /var/folders/wd/vkk3t3_551s17d64phds_khh0000gn/T/firebase/storage/blobs"}}
+[debug] [2021-11-02T10:02:47.170Z] > refreshing access token with scopes: []
+[debug] [2021-11-02T10:02:47.172Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
  <request body omitted>
-[debug] [2021-10-28T23:56:21.238Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","date":"Thu, 28 Oct 2021 23:56:21 GMT","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
-[debug] [2021-10-28T23:56:21.577Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/ableton-project-analyzer/sites 
-[debug] [2021-10-28T23:56:22.549Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/ableton-project-analyzer/sites 200
-[debug] [2021-10-28T23:56:22.550Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/ableton-project-analyzer/sites {"sites":[{"name":"projects/1032328624026/sites/ableton-project-analyzer","defaultUrl":"https://ableton-project-analyzer.web.app","appId":"1:1032328624026:web:891a34fc98b18303f02c23","type":"DEFAULT_SITE"}]}
-[debug] [2021-10-28T23:56:22.551Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer/webApps/1:1032328624026:web:891a34fc98b18303f02c23/config [none]
-[debug] [2021-10-28T23:56:23.722Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer/webApps/1:1032328624026:web:891a34fc98b18303f02c23/config 200
-[debug] [2021-10-28T23:56:23.723Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer/webApps/1:1032328624026:web:891a34fc98b18303f02c23/config {"projectId":"ableton-project-analyzer","appId":"1:1032328624026:web:891a34fc98b18303f02c23","storageBucket":"ableton-project-analyzer.appspot.com","locationId":"europe-west","apiKey":"AIzaSyAf_DxPcKhmI1A_OzSjjvDpB9ImAHaziZM","authDomain":"ableton-project-analyzer.firebaseapp.com","messagingSenderId":"1032328624026"}
+[debug] [2021-11-02T10:02:47.383Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","date":"Tue, 02 Nov 2021 10:02:47 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-02T10:02:47.514Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/ableton-project-analyzer/sites 
+[debug] [2021-11-02T10:02:48.566Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/ableton-project-analyzer/sites 200
+[debug] [2021-11-02T10:02:48.566Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/ableton-project-analyzer/sites {"sites":[{"name":"projects/1032328624026/sites/ableton-project-analyzer","defaultUrl":"https://ableton-project-analyzer.web.app","appId":"1:1032328624026:web:891a34fc98b18303f02c23","type":"DEFAULT_SITE"}]}
+[debug] [2021-11-02T10:02:48.567Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer/webApps/1:1032328624026:web:891a34fc98b18303f02c23/config [none]
+[debug] [2021-11-02T10:02:49.664Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer/webApps/1:1032328624026:web:891a34fc98b18303f02c23/config 200
+[debug] [2021-11-02T10:02:49.665Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer/webApps/1:1032328624026:web:891a34fc98b18303f02c23/config {"projectId":"ableton-project-analyzer","appId":"1:1032328624026:web:891a34fc98b18303f02c23","storageBucket":"ableton-project-analyzer.appspot.com","locationId":"europe-west","apiKey":"AIzaSyAf_DxPcKhmI1A_OzSjjvDpB9ImAHaziZM","authDomain":"ableton-project-analyzer.firebaseapp.com","messagingSenderId":"1032328624026"}
 [info] i  hosting: Serving hosting files from: build {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mbuild\u001b[22m"}}
 [info] ✔  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
-[warn] ⚠  ui: Emulator UI unable to start on port 4000, starting on 4003 instead. {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI unable to start on port 4000, starting on 4003 instead."}}
-[debug] [2021-10-28T23:56:24.632Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2021-10-28T23:56:24.633Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
-[debug] [2021-10-28T23:56:24.633Z] Starting Emulator UI with command {"binary":"node","args":["/Users/fredrik/.cache/firebase/emulators/ui-v1.6.0/server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/fredrik/.cache/firebase/emulators/ui-v1.6.0/server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[debug] [2021-11-02T10:02:50.274Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2021-11-02T10:02:50.275Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2021-11-02T10:02:50.275Z] Starting Emulator UI with command {"binary":"node","args":["/Users/fredrik/.cache/firebase/emulators/ui-v1.6.0/server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/fredrik/.cache/firebase/emulators/ui-v1.6.0/server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
 [info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
-[debug] [2021-10-28T23:56:26.205Z] Web / API server started at localhost:4003
- {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4003\n"}}
+[debug] [2021-11-02T10:02:50.805Z] Web / API server started at localhost:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4000\n"}}
 [info] 
 ┌─────────────────────────────────────────────────────────────┐
 │ ✔  All emulators ready! It is now safe to connect your app. │
-│ i  View Emulator UI at http://localhost:4003                │
+│ i  View Emulator UI at http://localhost:4000                │
 └─────────────────────────────────────────────────────────────┘
 
 ┌──────────┬────────────────┬───────────────────────────────┐
@@ -42,10 +44,117 @@
 ├──────────┼────────────────┼───────────────────────────────┤
 │ Hosting  │ localhost:5000 │ n/a                           │
 ├──────────┼────────────────┼───────────────────────────────┤
-│ Storage  │ localhost:9199 │ http://localhost:4003/storage │
+│ Storage  │ localhost:9199 │ http://localhost:4000/storage │
 └──────────┴────────────────┴───────────────────────────────┘
   Emulator Hub running at localhost:4400
   Other reserved ports: 4500
 
 Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
  
+[debug] [2021-11-02T10:26:20.034Z] ----------------------------------------------------------------------
+[debug] [2021-11-02T10:26:20.036Z] Command:       /Users/fredrik/.nvm/versions/node/v14.17.6/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2021-11-02T10:26:20.037Z] CLI Version:   9.16.0
+[debug] [2021-11-02T10:26:20.037Z] Platform:      darwin
+[debug] [2021-11-02T10:26:20.037Z] Node Version:  v14.17.6
+[debug] [2021-11-02T10:26:20.047Z] Time:          Tue Nov 02 2021 11:26:20 GMT+0100 (Central European Standard Time)
+[debug] [2021-11-02T10:26:20.047Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-11-02T10:26:20.107Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-11-02T10:26:20.108Z] > authorizing via signed-in user (fredrik@megatech.ltd)
+[debug] [2021-11-02T10:26:20.108Z] [iam] checking project ableton-project-analyzer for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-11-02T10:26:20.111Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-11-02T10:26:20.111Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-02T10:26:20.374Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","date":"Tue, 02 Nov 2021 10:26:20 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-02T10:26:20.429Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/ableton-project-analyzer:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2021-11-02T10:26:21.329Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 02 Nov 2021 10:26:21 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=702","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-02T10:26:21.333Z] > refreshing access token with scopes: []
+[debug] [2021-11-02T10:26:21.334Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-02T10:26:21.496Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Tue, 02 Nov 2021 10:26:21 GMT","pragma":"no-cache","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-02T10:26:21.633Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer [none]
+[debug] [2021-11-02T10:26:22.066Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer 200
+[debug] [2021-11-02T10:26:22.067Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ableton-project-analyzer {"projectId":"ableton-project-analyzer","projectNumber":"1032328624026","displayName":"ableton-project-analyzer","name":"projects/ableton-project-analyzer","resources":{"hostingSite":"ableton-project-analyzer","storageBucket":"ableton-project-analyzer.appspot.com","locationId":"europe-west"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'ableton-project-analyzer'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2021-11-02T10:26:22.077Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-11-02T10:26:22.078Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-02T10:26:22.228Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","date":"Tue, 02 Nov 2021 10:26:22 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-02T10:26:22.274Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/ableton-project-analyzer/versions  
+ {"config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2021-11-02T10:26:23.785Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 02 Nov 2021 10:26:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting[ableton-project-analyzer]: beginning deploy... 
+[info] i  hosting[ableton-project-analyzer]: found 30 files in build 
+[debug] [2021-11-02T10:26:24.168Z] > refreshing access token with scopes: []
+[debug] [2021-11-02T10:26:24.168Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-02T10:26:24.170Z] [hosting] hash cache [YnVpbGQ] stored for 30 files
+[debug] [2021-11-02T10:26:24.170Z] [hosting][hash queue][FINAL] {"max":341,"min":18,"avg":37.43333333333333,"active":0,"complete":30,"success":30,"errored":0,"retried":0,"total":30,"elapsed":346}
+[debug] [2021-11-02T10:26:24.323Z] <<< HTTP RESPONSE 200 {"date":"Tue, 02 Nov 2021 10:26:24 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-02T10:26:24.364Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/sites/ableton-project-analyzer/versions/80ee87b21ad408cd:populateFiles [none]
+[debug] [2021-11-02T10:26:24.364Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/sites/ableton-project-analyzer/versions/80ee87b21ad408cd:populateFiles {"files":{"/favicon.ico":"c81fe46aa56ff717146af829dfdd7b9caa5caf51a1d8e65f6843335dec38c2f9","/greetings.worker.ts":"71a9eafcd4009fc16ff5b85b529d6097124d2c063a71236bd2bfa2125c0201a8","/index.html":"20d1082d22f63e93c2fd24c8ce9d978405af68e5284c5f6f0bf7ea55470fc15d","/static/css/main.882cafb0.chunk.css.map":"5d0c70eccca35092255d93a13c150fbaa1e45f7af1f1580f6dab602e5c398422","/logo192.png":"2b93721def4947c43ced7afebaa40e3d47abe851c3cfa11b2961b87a7eb813a1","/manifest.json":"341d52628782f8ac9290bbfc43298afccb47b7cbfcee146ae30cf0f46bc30900","/static/css/main.882cafb0.chunk.css":"d60579f209a29d8107a5ec505dc767d7e134fb0178e81ef0101870e0aef36d8d","/robots.txt":"391d14b3c2f8c9143a27a28c7399585142228d4d1bdbe2c87ac946de411fa9a2","/asset-manifest.json":"4b27f7cebc8e1b3e54dad07d16d072f30e6a3757544ab12bece2a78a19cc0854","/static/js/2.54324750.chunk.js.LICENSE.txt":"e97badb08dd5d7227db49828c56309d428da0f1325a0fece2647cbe685516117","/static/js/abletonAnalyzer.c3b5fce6.chunk.worker.js.LICENSE.txt":"87765cc58a7da59c2e6fd4936b66e97e71a9e7f6c6b12b6c8d669bea2b471f5e","/static/js/main.24066ed2.chunk.js":"f3ca31203151fe138303c2198ef8f458f8db025522cc93b5e500844c44af115a","/static/js/runtime-main.ba0f6ab9.js":"982fe1029e1f15ab776d9db9dc23dc18170c28c8f401a6aa1eb690a8081ac933","/static/js/runtime-main.ba0f6ab9.js.map":"1c06f63cc4f53504ea7127b5a272a2b7d1398a5a5ea041ad6305c0d532ec94e5","/static/js/unZip.b46e3c6e.chunk.worker.js.LICENSE.txt":"e2010e2a43109c4bbdb7c269e75ca4fc4cec5134108c36bfc1f2108ee672e155","/static/media/AbletonFile.2fb49ab9.svg":"2a4fd0acbb1648afe67c8714770f2cf6b6d0e98f1da1b264902faf63f9390035","/static/media/Ableton.68dab85b.svg":"8b441f10ec68c20bbcb4b9d57e9a2fdc0a23850c290516294c13fa9bf39e237e","/static/media/Check.453668c8.svg":"57b318acede8fd72e710f2dfb685a1d242cbe462249b661c2212e9a8f7d41ce4","/static/media/AbletonFolder.d28e5f84.svg":"999c95f53c4071f3bb4dc96b441c064c4e08b9715cc7a5e40d098c0769c33278","/static/media/ChevronDown.3aa6ee6b.svg":"d4bdcf174c8177b6bb6b6778b028d30e3e7f17b03f0fe50ac082457dd8090b16","/static/media/ChevronUp.1c556107.svg":"4f874524477019d51569bf084068d73bf6e69c45744520d0b39cc1202969f7f2","/static/media/Question.dea232b6.svg":"628f6e9adc464cb90c57a2193e7aec0520d9628f5b43dffe424e9416b4b95982","/static/media/Cross.f746c769.svg":"cf1042d20370519eca2585c81248b313da51933cf69d1ad0d131b663c4a5aa4e","/static/js/main.24066ed2.chunk.js.map":"6c6e563146d4a51a11a97c81e790868f716619c7bececb18fd5abb862deb0367","/static/js/abletonAnalyzer.c3b5fce6.chunk.worker.js":"5612b33c18c00ae40bf69b1738add18deab16549f9596a18ebd3e13bdda20ad8","/static/js/unZip.b46e3c6e.chunk.worker.js":"86d06a64619d33e99ee0d311602994ba9e0542d6c1aee62ee71087a6636332b5","/static/js/2.54324750.chunk.js":"409e081d4effafb5e070e16ef371c8ad3c331cf28e984d8421baa1efece1f55f","/static/js/unZip.b46e3c6e.chunk.worker.js.map":"42fe80e19f4691d5bd51e650969665d70a7ec01c782284f0c5749f453c3846f1","/static/js/abletonAnalyzer.c3b5fce6.chunk.worker.js.map":"a0dee179f095d80850c14571fda96b29d546cabe670147db238b9aaa373c9ea1","/static/js/2.54324750.chunk.js.map":"ba932c8054dde7d344b6c6ec804633a9d15aa6648242cdb3c5ceb28bd81970a2"}}
+[debug] [2021-11-02T10:26:25.749Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/sites/ableton-project-analyzer/versions/80ee87b21ad408cd:populateFiles 200
+[debug] [2021-11-02T10:26:25.749Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/sites/ableton-project-analyzer/versions/80ee87b21ad408cd:populateFiles {"uploadRequiredHashes":["ba932c8054dde7d344b6c6ec804633a9d15aa6648242cdb3c5ceb28bd81970a2","20d1082d22f63e93c2fd24c8ce9d978405af68e5284c5f6f0bf7ea55470fc15d","d60579f209a29d8107a5ec505dc767d7e134fb0178e81ef0101870e0aef36d8d","409e081d4effafb5e070e16ef371c8ad3c331cf28e984d8421baa1efece1f55f","6c6e563146d4a51a11a97c81e790868f716619c7bececb18fd5abb862deb0367","f3ca31203151fe138303c2198ef8f458f8db025522cc93b5e500844c44af115a","5d0c70eccca35092255d93a13c150fbaa1e45f7af1f1580f6dab602e5c398422","4b27f7cebc8e1b3e54dad07d16d072f30e6a3757544ab12bece2a78a19cc0854"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files"}
+[debug] [2021-11-02T10:26:25.751Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/ba932c8054dde7d344b6c6ec804633a9d15aa6648242cdb3c5ceb28bd81970a2 [none]
+[debug] [2021-11-02T10:26:25.751Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/ba932c8054dde7d344b6c6ec804633a9d15aa6648242cdb3c5ceb28bd81970a2 [stream]
+[debug] [2021-11-02T10:26:25.752Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/20d1082d22f63e93c2fd24c8ce9d978405af68e5284c5f6f0bf7ea55470fc15d [none]
+[debug] [2021-11-02T10:26:25.752Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/20d1082d22f63e93c2fd24c8ce9d978405af68e5284c5f6f0bf7ea55470fc15d [stream]
+[debug] [2021-11-02T10:26:25.753Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/d60579f209a29d8107a5ec505dc767d7e134fb0178e81ef0101870e0aef36d8d [none]
+[debug] [2021-11-02T10:26:25.753Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/d60579f209a29d8107a5ec505dc767d7e134fb0178e81ef0101870e0aef36d8d [stream]
+[debug] [2021-11-02T10:26:25.753Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/409e081d4effafb5e070e16ef371c8ad3c331cf28e984d8421baa1efece1f55f [none]
+[debug] [2021-11-02T10:26:25.753Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/409e081d4effafb5e070e16ef371c8ad3c331cf28e984d8421baa1efece1f55f [stream]
+[debug] [2021-11-02T10:26:25.754Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/6c6e563146d4a51a11a97c81e790868f716619c7bececb18fd5abb862deb0367 [none]
+[debug] [2021-11-02T10:26:25.754Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/6c6e563146d4a51a11a97c81e790868f716619c7bececb18fd5abb862deb0367 [stream]
+[debug] [2021-11-02T10:26:25.754Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/f3ca31203151fe138303c2198ef8f458f8db025522cc93b5e500844c44af115a [none]
+[debug] [2021-11-02T10:26:25.754Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/f3ca31203151fe138303c2198ef8f458f8db025522cc93b5e500844c44af115a [stream]
+[debug] [2021-11-02T10:26:25.755Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/5d0c70eccca35092255d93a13c150fbaa1e45f7af1f1580f6dab602e5c398422 [none]
+[debug] [2021-11-02T10:26:25.755Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/5d0c70eccca35092255d93a13c150fbaa1e45f7af1f1580f6dab602e5c398422 [stream]
+[debug] [2021-11-02T10:26:25.755Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/4b27f7cebc8e1b3e54dad07d16d072f30e6a3757544ab12bece2a78a19cc0854 [none]
+[debug] [2021-11-02T10:26:25.755Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/4b27f7cebc8e1b3e54dad07d16d072f30e6a3757544ab12bece2a78a19cc0854 [stream]
+[debug] [2021-11-02T10:26:25.756Z] [hosting][populate queue][FINAL] {"max":1584,"min":1584,"avg":1584,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1589}
+[debug] [2021-11-02T10:26:25.756Z] [hosting] uploads queued: 8
+[debug] [2021-11-02T10:26:27.272Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/6c6e563146d4a51a11a97c81e790868f716619c7bececb18fd5abb862deb0367 200
+[debug] [2021-11-02T10:26:27.272Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/6c6e563146d4a51a11a97c81e790868f716619c7bececb18fd5abb862deb0367 [stream]
+[debug] [2021-11-02T10:26:27.327Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/f3ca31203151fe138303c2198ef8f458f8db025522cc93b5e500844c44af115a 200
+[debug] [2021-11-02T10:26:27.327Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/f3ca31203151fe138303c2198ef8f458f8db025522cc93b5e500844c44af115a [stream]
+[debug] [2021-11-02T10:26:27.617Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/5d0c70eccca35092255d93a13c150fbaa1e45f7af1f1580f6dab602e5c398422 200
+[debug] [2021-11-02T10:26:27.617Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/5d0c70eccca35092255d93a13c150fbaa1e45f7af1f1580f6dab602e5c398422 [stream]
+[debug] [2021-11-02T10:26:27.881Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/4b27f7cebc8e1b3e54dad07d16d072f30e6a3757544ab12bece2a78a19cc0854 200
+[debug] [2021-11-02T10:26:27.881Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/4b27f7cebc8e1b3e54dad07d16d072f30e6a3757544ab12bece2a78a19cc0854 [stream]
+[debug] [2021-11-02T10:26:27.962Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/20d1082d22f63e93c2fd24c8ce9d978405af68e5284c5f6f0bf7ea55470fc15d 200
+[debug] [2021-11-02T10:26:27.962Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/20d1082d22f63e93c2fd24c8ce9d978405af68e5284c5f6f0bf7ea55470fc15d [stream]
+[debug] [2021-11-02T10:26:27.993Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/d60579f209a29d8107a5ec505dc767d7e134fb0178e81ef0101870e0aef36d8d 200
+[debug] [2021-11-02T10:26:27.993Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/d60579f209a29d8107a5ec505dc767d7e134fb0178e81ef0101870e0aef36d8d [stream]
+[debug] [2021-11-02T10:26:28.203Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/409e081d4effafb5e070e16ef371c8ad3c331cf28e984d8421baa1efece1f55f 200
+[debug] [2021-11-02T10:26:28.204Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/409e081d4effafb5e070e16ef371c8ad3c331cf28e984d8421baa1efece1f55f [stream]
+[debug] [2021-11-02T10:26:29.212Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/ba932c8054dde7d344b6c6ec804633a9d15aa6648242cdb3c5ceb28bd81970a2 200
+[debug] [2021-11-02T10:26:29.212Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/ableton-project-analyzer/versions/80ee87b21ad408cd/files/ba932c8054dde7d344b6c6ec804633a9d15aa6648242cdb3c5ceb28bd81970a2 [stream]
+[debug] [2021-11-02T10:26:29.212Z] [hosting][upload queue][FINAL] {"max":3462,"min":1521,"avg":2182.875,"active":0,"complete":8,"success":8,"errored":0,"retried":0,"total":8,"elapsed":3462}
+[info] ✔  hosting[ableton-project-analyzer]: file upload complete 
+[debug] [2021-11-02T10:26:29.214Z] [hosting] deploy completed after 5428ms
+[debug] [2021-11-02T10:26:29.214Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "site": "ableton-project-analyzer"
+    },
+    "site": "ableton-project-analyzer",
+    "version": "sites/ableton-project-analyzer/versions/80ee87b21ad408cd"
+  }
+]
+[info] i  hosting[ableton-project-analyzer]: finalizing version... 
+[debug] [2021-11-02T10:26:29.219Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-11-02T10:26:29.219Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-02T10:26:29.377Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","date":"Tue, 02 Nov 2021 10:26:29 GMT","expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-02T10:26:29.427Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/ableton-project-analyzer/versions/80ee87b21ad408cd?updateMask=status  
+ {"status":"FINALIZED"}

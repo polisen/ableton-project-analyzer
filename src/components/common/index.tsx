@@ -3,6 +3,7 @@ import Text from './Text';
 import Divider from './Divider';
 import Container from './Container';
 import Button from './Button';
+import Spinner from './Spinner';
 
 export {
   Chevron,
@@ -10,4 +11,5 @@ export {
   Divider,
   Container,
   Button,
+  Spinner,
 };
